@@ -22,5 +22,5 @@
 		/* Vite */
 		"types": ["vite/client"],
 	},
-	"include": ["src", "ext.d.ts"],
+	"include": ["src", "ext.d.ts", "vite.config.ts"],
 }

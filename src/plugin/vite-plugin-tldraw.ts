@@ -1,4 +1,7 @@
-import { type TldrawToImageOptions, tldrawToImage } from '@kitschpatrol/tldraw-cli'
+import {
+	type TldrawToImageOptions as TldrawCliImageOptions,
+	tldrawToImage,
+} from '@kitschpatrol/tldraw-cli'
 import slugify from '@sindresorhus/slugify'
 import { nanoid } from 'nanoid'
 import crypto from 'node:crypto'
@@ -8,21 +11,21 @@ import { isFile } from 'path-type'
 import { type Plugin, normalizePath } from 'vite'
 
 // Returns a URL to an svg generated from the tldr file
-// Pass any values from TldrImageOptions as params in the URL
+// Pass any values from TldrawImageOptions as params in the URL
 
-export type TldrPluginOptions = {
+export type TldrawPluginOptions = {
 	cacheEnabled?: boolean
-	defaultImageOptions?: TldrImageOptions
+	defaultImageOptions?: TldrawImageOptions
 	verbose?: boolean
 }
 
-export type TldrImageOptions = Pick<
-	TldrawToImageOptions,
+export type TldrawImageOptions = Pick<
+	TldrawCliImageOptions,
 	'darkMode' | 'format' | 'stripStyle' | 'transparent'
 >
 
-export default function tldraw(options?: TldrPluginOptions): Plugin {
-	const defaultOptions: TldrPluginOptions = {
+export default function tldraw(options?: TldrawPluginOptions): Plugin {
+	const defaultOptions: TldrawPluginOptions = {
 		cacheEnabled: true,
 		defaultImageOptions: {
 			darkMode: false,
@@ -33,7 +36,7 @@ export default function tldraw(options?: TldrPluginOptions): Plugin {
 		verbose: false,
 	}
 
-	const resolvedOptions: TldrPluginOptions = {
+	const resolvedOptions: TldrawPluginOptions = {
 		...defaultOptions,
 		...options,
 	}
@@ -48,8 +51,7 @@ export default function tldraw(options?: TldrPluginOptions): Plugin {
 			outputPath = config.build.assetsDir
 			isBuild = config.command === 'build'
 		},
-		name: 'vite:tldraw',
-
+		name: 'vite-plugin-tldraw',
 		async transform(_, id) {
 			// Strip parameters before testing for match
 			const cleanId = id.replace(/\?.*$/, '')
@@ -58,13 +60,13 @@ export default function tldraw(options?: TldrPluginOptions): Plugin {
 				// remove the tldr tag from the end
 				const paramsString = id.replace(/&tldr.*$/, '').split('?')[1] ?? ''
 				const params = new URLSearchParams(paramsString)
-				const imageOptions = convertSearchParamsToObject<TldrImageOptions>(params)
+				const imageOptions = convertSearchParamsToObject<TldrawImageOptions>(params)
 
 				// Merge options, with the following priority:
 				// 1. URL search params provided in the module import url
-				// 2. TldrImageOptions passed in plugin options
+				// 2. TldrawImageOptions passed in plugin options
 				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
-				const mergedImageOptions: TldrImageOptions & {
+				const mergedImageOptions: TldrawImageOptions & {
 					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single frame name here
 					frame?: string
@@ -164,7 +166,7 @@ export default function tldraw(options?: TldrPluginOptions): Plugin {
 
 // Helpers
 
-async function getFileHash(filePath: string, tldrawOptions?: TldrImageOptions): Promise<string> {
+async function getFileHash(filePath: string, tldrawOptions?: TldrawImageOptions): Promise<string> {
 	const fileBuffer = await fs.readFile(filePath)
 	const hash = crypto.createHash('sha1')
 	hash.update(fileBuffer)

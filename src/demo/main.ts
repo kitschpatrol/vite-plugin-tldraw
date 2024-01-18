@@ -2,7 +2,7 @@ import tldrFileFrame from './assets/test-sketch-three-frames.tldr?frame=frame-3&
 import tldrFile from './assets/test-sketch.tldr'
 import tldrFileWithParams from './assets/test-sketch.tldr?format=png&transparent=true&tldr'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+document.querySelector<HTMLDivElement>('body')!.innerHTML = `
   <p>Tldr Path: ${tldrFile}</p>
   <img src="${tldrFile}" />
   <p>Tldr Path: ${tldrFileFrame}</p>

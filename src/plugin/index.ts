@@ -1,1 +1,1 @@
-export { type TldrImageOptions, type TldrPluginOptions, default } from './vite-plugin-tldraw'
+export { type TldrawImageOptions, type TldrawPluginOptions, default } from './vite-plugin-tldraw'
