@@ -8,13 +8,12 @@ import { isFile } from 'path-type'
 import { type Plugin, normalizePath } from 'vite'
 
 // Returns a URL to an svg generated from the tldr file
-// Pass any values from TldrawToImageOptions as params in the URL
-// TODO get options from props?
+// Pass any values from TldrImageOptions as params in the URL
 
 export type TldrPluginOptions = {
-	cacheEnabled: boolean
+	cacheEnabled?: boolean
 	defaultImageOptions?: TldrImageOptions
-	verbose: boolean
+	verbose?: boolean
 }
 
 export type TldrImageOptions = Pick<
@@ -22,7 +21,7 @@ export type TldrImageOptions = Pick<
 	'darkMode' | 'format' | 'stripStyle' | 'transparent'
 >
 
-export default function tldrPlugin(options: TldrPluginOptions): Plugin {
+export default function tldraw(options?: TldrPluginOptions): Plugin {
 	const defaultOptions: TldrPluginOptions = {
 		cacheEnabled: true,
 		defaultImageOptions: {
@@ -49,7 +48,7 @@ export default function tldrPlugin(options: TldrPluginOptions): Plugin {
 			outputPath = config.build.assetsDir
 			isBuild = config.command === 'build'
 		},
-		name: 'vite:tldr',
+		name: 'vite:tldraw',
 
 		async transform(_, id) {
 			// Strip parameters before testing for match
@@ -100,6 +99,7 @@ export default function tldrPlugin(options: TldrPluginOptions): Plugin {
 
 				// Check for cache, generate svg from tldr if needed
 				const cacheIsValid = await isFile(sourceCachePath)
+
 				if (!cacheIsValid) {
 					if (resolvedOptions.verbose) {
 						console.log(

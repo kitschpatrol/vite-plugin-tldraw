@@ -24,7 +24,20 @@
 	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./ext": {
+			"types": "./ext.d.ts"
+		}
+	},
 	"types": "./dist/index.d.ts",
+	"files": [
+		"./ext.d.ts",
+		"dist"
+	],
 	"keywords": [
 		"vite-plugin",
 		"tldraw",
@@ -36,19 +49,28 @@
 		"import"
 	],
 	"scripts": {
+		"build": "pnpm build:plugin",
+		"build:demo": "vite build",
+		"build:plugin": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.plugin.json",
+		"dev": "vite",
 		"fix": "shared-config --fix",
 		"lint": "shared-config --lint",
+		"preview": "vite preview",
 		"release": "pnpm build && pnpm bumpp --commit 'Release: %s' && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
+	"dependencies": {
+		"@kitschpatrol/tldraw-cli": "^2.2.2"
+	},
 	"devDependencies": {
 		"@kitschpatrol/shared-config": "^4.3.3",
-		"@kitschpatrol/tldraw-cli": "^2.2.2",
 		"@sindresorhus/slugify": "^2.2.1",
 		"@types/node": "^20.11.5",
 		"bumpp": "^9.3.0",
+		"esbuild": "^0.19.11",
 		"nanoid": "^5.0.4",
 		"path-type": "^5.0.0",
+		"tsx": "^4.7.0",
 		"typescript": "^5.3.3",
 		"vite": "^5.0.11"
 	},

@@ -14,3 +14,4 @@
 
 - <https://github.com/vitejs/vite/discussions/7515>
 - <https://liana.one/custom-language-plugin-for-vite>
+- <https://github.com/UstymUkhman/vite-plugin-glsl>

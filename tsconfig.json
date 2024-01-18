@@ -18,6 +18,9 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
+
+		/* Vite */
+		"types": ["vite/client"],
 	},
-	"include": ["src"],
+	"include": ["src", "ext.d.ts"],
 }
