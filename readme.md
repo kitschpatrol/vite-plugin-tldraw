@@ -188,9 +188,9 @@ I'm consciously releasing this tool under the `@kitschpatrol` namespace on NPM t
 
 ## References
 
-Some reference links and issues from development are retained for my own reference below:
+Some links and issues from development are retained for my own reference below:
 
-**TypeScript module compatibility with URLSearchParams:**
+**TypeScript module query parameter compatibility:**
 
 - <https://github.com/microsoft/TypeScript/issues/38638>
 - <https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules>
