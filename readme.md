@@ -1,4 +1,4 @@
-# @kitschpatrol/vite-plugin-tldr
+# @kitschpatrol/vite-plugin-tldraw
 
 [![NPM Package](https://img.shields.io/npm/v/@kitschpatrol/vite-plugin-tldraw.svg)](https://npmjs.com/package/@kitschpatrol/vite-plugin-tldraw)
 
@@ -13,7 +13,7 @@ This allows `.tldr` files to be imported just like regular `.webp`, `.jpeg` etc.
 import tldrImage from './assets/test-sketch.tldr'
 
 const body = document.querySelector<HTMLDivElement>('body')
-body.innerHTML = `<img src="${tldrImage}" />`
+if (body) body.innerHTML = `<img src="${tldrImage}" />`
 ```
 
 The above transforms `./assets/test-sketch.tldr` into `./assets/test-sketch-{hash}.svg`, caches the output file, and then returns an SVG URL ready to be passed to an `img` element's `src` attribute.
@@ -24,6 +24,8 @@ The plugin also allows global configuration of several aspects of the conversion
 import tldrImage from './assets/test-sketch.tldr?format=png&tldr'
 ```
 
+_For lower-level processing of `.tldr` files in Node projects or via the command line, please see [@kitschpatrol/tldraw-cli](https://github.com/kitschpatrol/tldraw-cli)._
+
 ## Installation
 
 ### 1. Add the dependency
@@ -31,14 +33,14 @@ import tldrImage from './assets/test-sketch.tldr?format=png&tldr'
 Assuming you're starting with a Vite project of some flavor:
 
 ```sh
-npm --install --save-dev @kitschpatrol/vite-plugin-tldr
+npm install --save-dev @kitschpatrol/vite-plugin-tldraw
 ```
 
 ### 2. Add the plugin to your `vite.config` file
 
 ```ts
 // vite.config.ts
-import tldrPlugin from './src/plugin'
+import tldrPlugin from '@kitschpatrol/vite-plugin-tldraw'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -55,7 +57,7 @@ Add the extension declarations to your [types](https://www.typescriptlang.org/ts
 ```json
 {
   "compilerOptions": {
-    "types": ["vite-plugin-tldraw/ext"]
+    "types": ["@kitschpatrol/vite-plugin-tldraw/ext"]
   }
 }
 ```
@@ -117,7 +119,7 @@ Configure the plugin to always generate PNGs with a transparent background, and 
 
 ```ts
 // vite.config.ts
-import tldrPlugin from './src/plugin'
+import tldrPlugin from '@kitschpatrol/vite-plugin-tldraw'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -126,7 +128,7 @@ export default defineConfig({
 })
 ```
 
-The plugin also exports `TldrawPluginOptions` and `TldrawImageOptions` types for your convenience.
+The `@kitschpatrol/vite-plugin-tldraw` also exports `TldrawPluginOptions` and `TldrawImageOptions` types for your convenience.
 
 ## Import path options
 
@@ -164,6 +166,8 @@ console.log(tldrImageFrame)
 
 ## Implementation notes
 
+This tool is not a part of the official tldraw project, and it is currently only tested and known to be compatible with tldraw 2.0.0-beta.2.
+
 Behind the scenes, the plugin calls [@kitschpatrol/tldraw-cli](https://github.com/kitschpatrol/tldraw-cli)'s Node API to generate image files from `.tldr` files, and then passes the resulting URL as the value of the module import.
 
 Because [`tldraw-cli`](https://github.com/kitschpatrol/tldraw-cli) relies on [Puppeteer](https://pptr.dev), conversion can be a bit slow (on the order of a second or two), so by default generated image assets are cached to expedite subsequent builds.
@@ -180,15 +184,13 @@ Possible paths for future improvements include the following:
 
 Any other suggestions are welcome.
 
-This tool is not a part of the official tldraw project.
-
 I'm consciously releasing this tool under the `@kitschpatrol` namespace on NPM to leave the `vite-plugin-tldraw` package name available to the core tldraw project.
 
 ## References
 
 Some reference links and issues from development are retained for my own reference below:
 
-**Typescript module compatibility with URLSearchParams:**
+**TypeScript module compatibility with URLSearchParams:**
 
 - <https://github.com/microsoft/TypeScript/issues/38638>
 - <https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules>

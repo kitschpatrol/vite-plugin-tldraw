@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@kitschpatrol/tldraw-cli':
-    specifier: ^2.2.2
-    version: 2.2.2(typescript@5.3.3)
+    specifier: ^2.2.3
+    version: 2.2.3(typescript@5.3.3)
 
 devDependencies:
   '@kitschpatrol/shared-config':
@@ -975,8 +975,8 @@ packages:
       - typescript
     dev: true
 
-  /@kitschpatrol/tldraw-cli@2.2.2(typescript@5.3.3):
-    resolution: {integrity: sha512-bazQPdYRGE06wzv6OvFPwhjpudAZfi8x9gGkfKhei+2deRPhija25Q/ZDyY9ouRxDVkSForORgpQylGdM7EfXA==}
+  /@kitschpatrol/tldraw-cli@2.2.3(typescript@5.3.3):
+    resolution: {integrity: sha512-djO0iCrmrZnhOjdEjDADg5XT0wSV48xjXXZZYpldwG7d4IpJyaXNSgopWsWObKjZhfIeXj1djkFNQtveADcybQ==}
     engines: {node: '>=18.0.0', pnpm: '>=8.0.0'}
     hasBin: true
     dependencies:
