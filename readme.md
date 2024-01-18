@@ -65,7 +65,7 @@ Add the extension declarations to your [types](https://www.typescriptlang.org/ts
 Alternately, you can add a triple-slash package dependency directive to your global types file (e.g. `env.d.ts` or similar):
 
 ```ts
-/// <reference types="vite-plugin-tldraw/ext" />
+/// <reference types="@kitschpatrol/vite-plugin-tldraw/ext" />
 ```
 
 This step should take care of errors like:
