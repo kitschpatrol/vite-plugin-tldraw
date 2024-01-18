@@ -1,0 +1,58 @@
+{
+	"name": "@kitschpatrol/vite-plugin-tldraw",
+	"version": "0.0.0",
+	"type": "module",
+	"description": "Vite plugin enabling module-like import of local tldraw .tldr files with automatic conversion to SVG or PNG.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kitschpatrol/tldraw-cli.git"
+	},
+	"homepage": "https://github.com/kitschpatrol/tldraw-cli",
+	"bugs": {
+		"url": "https://github.com/kitschpatrol/tldraw-cli/issues",
+		"email": "eric@ericmika.com"
+	},
+	"author": {
+		"name": "Eric Mika",
+		"email": "eric@ericmika.com",
+		"url": "https://ericmika.com"
+	},
+	"license": "MIT",
+	"engines": {
+		"node": ">=18.0.0",
+		"pnpm": ">=8.0.0"
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"keywords": [
+		"vite-plugin",
+		"tldraw",
+		"tldr",
+		"vite",
+		"diagram",
+		"drawing",
+		"sketch",
+		"import"
+	],
+	"scripts": {
+		"fix": "shared-config --fix",
+		"lint": "shared-config --lint",
+		"release": "pnpm build && pnpm bumpp --commit 'Release: %s' && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"@kitschpatrol/shared-config": "^4.3.3",
+		"@kitschpatrol/tldraw-cli": "^2.2.2",
+		"@sindresorhus/slugify": "^2.2.1",
+		"@types/node": "^20.11.5",
+		"bumpp": "^9.3.0",
+		"nanoid": "^5.0.4",
+		"path-type": "^5.0.0",
+		"typescript": "^5.3.3",
+		"vite": "^5.0.11"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
