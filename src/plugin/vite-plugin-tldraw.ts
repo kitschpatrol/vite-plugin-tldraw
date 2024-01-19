@@ -96,7 +96,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				)
 
 				if (!resolvedOptions.cacheEnabled) {
-					await fs.rmdir(cacheDirectory, { recursive: true })
+					await fs.rm(cacheDirectory, { recursive: true })
 				}
 
 				// Check for cache, generate svg from tldr if needed
