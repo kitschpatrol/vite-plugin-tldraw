@@ -18,7 +18,7 @@ if (body) body.innerHTML = `<img src="${tldrImage}" />`
 
 The above transforms `./assets/test-sketch.tldr` into `./assets/test-sketch-{hash}.svg`, caches the output file, and then returns an SVG URL ready to be passed to an `img` element's `src` attribute.
 
-The plugin also allows global configuration of several aspects of the conversion process, and individual import paths may set search / query parameters to define conversion options a per-import basis, e.g.:
+The plugin provides a global configuration object to customize of several aspects of the conversion process, and also allows overrides on a per-import basis via query parameters on the asset import path, e.g.:
 
 ```ts
 import tldrImage from './assets/test-sketch.tldr?format=png&tldr'
@@ -28,7 +28,7 @@ _For lower-level processing of `.tldr` files in Node projects or via the command
 
 ## Installation
 
-### 1. Add the dependency
+### 1. Install the plugin package
 
 Assuming you're starting with a Vite project of some flavor:
 
@@ -40,11 +40,11 @@ npm install --save-dev @kitschpatrol/vite-plugin-tldraw
 
 ```ts
 // vite.config.ts
-import tldrPlugin from '@kitschpatrol/vite-plugin-tldraw'
+import tldraw from '@kitschpatrol/vite-plugin-tldraw'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [tldrPlugin()],
+  plugins: [tldraw()],
 })
 ```
 
@@ -98,11 +98,11 @@ See the sections below for additional conversion options.
 
 ### `TldrawPluginOptions`
 
-| Key                   | Type                 | Description                                                                                                                                                                                                                                                         | Default     |
-| --------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `cacheEnabled`        | `boolean`            | Caches generated image files. Hashes based on the source `.tldr` content _and_ any TldrawImageOptions or import query parameters used and automatically regenerates as needed. Cached files are stored in Vite's `config.cacheDir` (usually `/node_modules/.vite`). | `true`      |
-| `defaultImageOptions` | `TldrawImageOptions` | Default options object for all the image conversion process. See section below for more detail.                                                                                                                                                                     | _See below_ |
-| `verbose`             | `boolean`            | Log information about the conversion process to the console.                                                                                                                                                                                                        | `false`     |
+| Key                   | Type                 | Description                                                                                                                                                                                                                                                   | Default     |
+| --------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `cacheEnabled`        | `boolean`            | Caches generated image files. Hashes based on the source `.tldr` content _and_ any TldrawImageOptions or import query parameters ensure the cache regenerates as needed. Cached files are stored in Vite's `config.cacheDir` (usually `/node_modules/.vite`). | `true`      |
+| `defaultImageOptions` | `TldrawImageOptions` | Default options object for all the image conversion process. See section below for more detail.                                                                                                                                                               | _See below_ |
+| `verbose`             | `boolean`            | Log information about the conversion process to the console.                                                                                                                                                                                                  | `false`     |
 
 ### `TldrawImageOptions`
 
@@ -119,12 +119,17 @@ Configure the plugin to always generate PNGs with a transparent background, and 
 
 ```ts
 // vite.config.ts
-import tldrPlugin from '@kitschpatrol/vite-plugin-tldraw'
+import tldraw from '@kitschpatrol/vite-plugin-tldraw'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // By default,
-  plugins: [tldrPlugin({ verbose: true, format: 'png', transparent: true })],
+  plugins: [
+    tldraw({
+      verbose: true,
+      format: 'png',
+      transparent: true,
+    }),
+  ],
 })
 ```
 
