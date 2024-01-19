@@ -27,7 +27,10 @@ export type TldrawImageOptions = Pick<
 >
 
 export default function tldraw(options?: TldrawPluginOptions): Plugin {
-	const defaultOptions: TldrawPluginOptions = {
+	// Merge user options with defaults
+	const resolvedOptions: Required<TldrawPluginOptions> & {
+		defaultImageOptions: Required<TldrawImageOptions>
+	} = {
 		cacheEnabled: true,
 		defaultImageOptions: {
 			darkMode: false,
@@ -36,11 +39,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 			transparent: false,
 		},
 		verbose: false,
-	}
-
-	const resolvedOptions: TldrawPluginOptions = {
-		...defaultOptions,
-		...options,
+		...stripUndefined(options),
 	}
 
 	let cacheDirectory = ''
@@ -68,13 +67,13 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				// 1. URL search params provided in the module import url
 				// 2. TldrawImageOptions passed in plugin options
 				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
-				const mergedImageOptions: TldrawImageOptions & {
+				const mergedImageOptions: Required<TldrawImageOptions> & {
 					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single frame name here
 					frame?: string
 				} = {
 					...resolvedOptions.defaultImageOptions,
-					...imageOptions,
+					...stripUndefined(imageOptions),
 				}
 
 				// Sort out filenames
@@ -86,39 +85,46 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				const sourceHash = await getFileHash(sourcePath, mergedImageOptions)
 				const sourceFilename = path.basename(sourcePath, path.extname(sourcePath))
 
-				const frameName = mergedImageOptions.frame ? slugify(mergedImageOptions.frame) : undefined
+				// Sort out options
+				const { cacheEnabled, verbose } = resolvedOptions
+				const { darkMode, format, frame, stripStyle, transparent } = mergedImageOptions
+				const frameName = frame ? slugify(frame) : undefined
 
 				const sourceCacheFilename = `${[sourceFilename, frameName, sourceHash]
 					.filter((element) => element !== undefined)
-					.join('-')}.${mergedImageOptions.format}`
+					.join('-')}.${format}`
 				const sourceCachePath = path.join(cacheDirectory, sourceCacheFilename)
 				const sourceCachePathRelative = path.relative(
 					process.cwd(), // TODO - is this the right path?
 					sourceCachePath,
 				)
 
-				if (!resolvedOptions.cacheEnabled) {
+				if (!cacheEnabled) {
 					await fs.rm(cacheDirectory, { recursive: true })
 				}
 
 				// Check for cache, generate svg from tldr if needed
 				const cacheIsValid = await isFile(sourceCachePath)
 
-				if (!cacheIsValid) {
+				if (cacheIsValid) {
+					if (verbose) {
+						console.log(
+							`\n[vite-tldr-plugin] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathRelative}"`,
+						)
+					}
+				} else {
 					const startTime = performance.now()
 					await fs.mkdir(cacheDirectory, { recursive: true })
 
 					// TODO a bit of a type mess from the frame transformations
 					const tldrawResponse = (await tldrawToImage(sourcePath, {
-						darkMode: mergedImageOptions.darkMode,
-						format: mergedImageOptions.format,
-						frames: (typeof mergedImageOptions.frame === 'string'
-							? [mergedImageOptions.frame]
-							: false) as false & string[],
+						darkMode,
+						format,
+						frames: (typeof frame === 'string' ? [frame] : false) as false & string[],
 						name: nanoid(), // Unique temp name to avoid collisions
 						output: cacheDirectory,
-						stripStyle: mergedImageOptions.stripStyle,
-						transparent: mergedImageOptions.transparent,
+						stripStyle,
+						transparent,
 					})) as string | string[]
 
 					// TldrawToImage returns an array of output files when frames is set,
@@ -127,7 +133,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 					await fs.rename(outputFile, sourceCachePath)
 
-					if (resolvedOptions.verbose) {
+					if (verbose) {
 						const sizeReport = await getPrettyFileSize(sourceCachePath)
 						const timeReport = prettyMilliseconds(performance.now() - startTime)
 						console.log(
@@ -191,4 +197,11 @@ async function getPrettyFileSize(file: string): Promise<string> {
 		console.error(error)
 		return 'unknown'
 	}
+}
+
+function stripUndefined(
+	options: Record<string, unknown> | undefined,
+): Record<string, unknown> | undefined {
+	if (options === undefined) return undefined
+	return Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined))
 }
