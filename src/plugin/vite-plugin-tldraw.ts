@@ -8,6 +8,8 @@ import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { isFile } from 'path-type'
+import prettyBytes from 'pretty-bytes'
+import prettyMilliseconds from 'pretty-ms'
 import { type Plugin, normalizePath } from 'vite'
 
 // Returns a URL to an svg generated from the tldr file
@@ -103,12 +105,6 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				const cacheIsValid = await isFile(sourceCachePath)
 
 				if (!cacheIsValid) {
-					if (resolvedOptions.verbose) {
-						console.log(
-							`\n[vite-tldr-plugin] Generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathRelative}"`,
-						)
-					}
-
 					const startTime = performance.now()
 					await fs.mkdir(cacheDirectory, { recursive: true })
 
@@ -132,11 +128,10 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 					await fs.rename(outputFile, sourceCachePath)
 
 					if (resolvedOptions.verbose) {
+						const sizeReport = await getPrettyFileSize(sourceCachePath)
+						const timeReport = prettyMilliseconds(performance.now() - startTime)
 						console.log(
-							`\n[vite-tldr-plugin] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathRelative}"\n  Time:\t${(
-								(performance.now() - startTime) /
-								1000
-							).toFixed(2)} seconds`,
+							`\n[vite-tldr-plugin] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathRelative}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
 						)
 					}
 				}
@@ -186,4 +181,14 @@ function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 	}
 
 	return object as T
+}
+
+async function getPrettyFileSize(file: string): Promise<string> {
+	try {
+		const { size } = await fs.stat(file)
+		return prettyBytes(size)
+	} catch (error) {
+		console.error(error)
+		return 'unknown'
+	}
 }

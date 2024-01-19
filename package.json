@@ -70,6 +70,8 @@
 		"esbuild": "^0.19.11",
 		"nanoid": "^5.0.4",
 		"path-type": "^5.0.0",
+		"pretty-bytes": "^6.1.1",
+		"pretty-ms": "^9.0.0",
 		"tsx": "^4.7.0",
 		"typescript": "^5.3.3",
 		"vite": "^5.0.11"
