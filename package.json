@@ -60,7 +60,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^2.2.3"
+		"@kitschpatrol/tldraw-cli": "^3.2.0"
 	},
 	"devDependencies": {
 		"@kitschpatrol/shared-config": "^4.3.3",
@@ -74,7 +74,7 @@
 		"pretty-ms": "^9.0.0",
 		"tsx": "^4.7.0",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.11"
+		"vite": "^5.0.12"
 	},
 	"publishConfig": {
 		"access": "public"

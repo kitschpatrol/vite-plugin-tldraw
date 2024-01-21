@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@kitschpatrol/tldraw-cli':
-    specifier: ^2.2.3
-    version: 2.2.3(typescript@5.3.3)
+    specifier: ^3.2.0
+    version: 3.2.0(typescript@5.3.3)
 
 devDependencies:
   '@kitschpatrol/shared-config':
@@ -44,8 +44,8 @@ devDependencies:
     specifier: ^5.3.3
     version: 5.3.3
   vite:
-    specifier: ^5.0.11
-    version: 5.0.11(@types/node@20.11.5)
+    specifier: ^5.0.12
+    version: 5.0.12(@types/node@20.11.5)
 
 packages:
 
@@ -981,8 +981,8 @@ packages:
       - typescript
     dev: true
 
-  /@kitschpatrol/tldraw-cli@2.2.3(typescript@5.3.3):
-    resolution: {integrity: sha512-djO0iCrmrZnhOjdEjDADg5XT0wSV48xjXXZZYpldwG7d4IpJyaXNSgopWsWObKjZhfIeXj1djkFNQtveADcybQ==}
+  /@kitschpatrol/tldraw-cli@3.2.0(typescript@5.3.3):
+    resolution: {integrity: sha512-TBfeSm8pJ3S2YsgmSLygMsfMAHkx6Oi0xGaEdHz7hFGF5a4I3OrK+PxiAMYOWmMF4I7f1LANU0jtKlKJzXEBbg==}
     engines: {node: '>=18.0.0', pnpm: '>=8.0.0'}
     hasBin: true
     dependencies:
@@ -7941,8 +7941,8 @@ packages:
       vfile-message: 4.0.2
     dev: true
 
-  /vite@5.0.11(@types/node@20.11.5):
-    resolution: {integrity: sha512-XBMnDjZcNAw/G1gEiskiM1v6yzM4GE5aMGvhWTlHAYYhxb7S3/V1s3m2LDHa8Vh6yIWYYB0iJwsEaS523c4oYA==}
+  /vite@5.0.12(@types/node@20.11.5):
+    resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:

@@ -122,20 +122,16 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 						)
 					}
 
-					// TODO a bit of a type mess from the frame transformations
-					const tldrawResponse = (await tldrawToImage(sourcePath, {
+					// TldrawToImage returns an array of output files when frames is set, we always take the first one
+					const [outputFile] = await tldrawToImage(sourcePath, {
 						darkMode,
 						format,
-						frames: (typeof frame === 'string' ? [frame] : false) as false & string[],
+						frames: frame ? [frame] : false,
 						name: nanoid(), // Unique temp name to avoid collisions
 						output: cacheDirectory,
 						stripStyle,
 						transparent,
-					})) as string | string[]
-
-					// TldrawToImage returns an array of output files when frames is set,
-					// extract the first one
-					const outputFile = Array.isArray(tldrawResponse) ? tldrawResponse[0] : tldrawResponse
+					})
 
 					await fs.rename(outputFile, sourceCachePath)
 
