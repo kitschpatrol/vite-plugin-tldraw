@@ -116,6 +116,12 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 					const startTime = performance.now()
 					await fs.mkdir(cacheDirectory, { recursive: true })
 
+					if (verbose && cacheEnabled) {
+						console.log(
+							`\n[vite-tldr-plugin] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathRelative}"`,
+						)
+					}
+
 					// TODO a bit of a type mess from the frame transformations
 					const tldrawResponse = (await tldrawToImage(sourcePath, {
 						darkMode,
