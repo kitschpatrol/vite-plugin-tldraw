@@ -23,7 +23,7 @@ export type TldrawPluginOptions = {
 
 export type TldrawImageOptions = Pick<
 	TldrawCliImageOptions,
-	'darkMode' | 'format' | 'stripStyle' | 'transparent'
+	'dark' | 'format' | 'stripStyle' | 'transparent'
 >
 
 export default function tldraw(options?: TldrawPluginOptions): Plugin {
@@ -33,7 +33,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 	} = {
 		cacheEnabled: true,
 		defaultImageOptions: {
-			darkMode: false,
+			dark: false,
 			format: 'svg',
 			stripStyle: false,
 			transparent: false,
@@ -87,7 +87,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 				// Sort out options
 				const { cacheEnabled, verbose } = resolvedOptions
-				const { darkMode, format, frame, stripStyle, transparent } = mergedImageOptions
+				const { dark, format, frame, stripStyle, transparent } = mergedImageOptions
 				const frameName = frame ? slugify(frame) : undefined
 
 				const sourceCacheFilename = `${[sourceFilename, frameName, sourceHash]
@@ -124,7 +124,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 					// TldrawToImage returns an array of output files when frames is set, we always take the first one
 					const [outputFile] = await tldrawToImage(sourcePath, {
-						darkMode,
+						dark,
 						format,
 						frames: frame ? [frame] : false,
 						name: nanoid(), // Unique temp name to avoid collisions
