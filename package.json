@@ -60,21 +60,21 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^3.2.0"
+		"@kitschpatrol/tldraw-cli": "^4.1.2"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.3.3",
+		"@kitschpatrol/shared-config": "^4.4.2",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.11.5",
+		"@types/node": "^20.11.20",
 		"bumpp": "^9.3.0",
-		"esbuild": "^0.19.11",
-		"nanoid": "^5.0.4",
+		"esbuild": "^0.20.1",
+		"nanoid": "^5.0.6",
 		"path-type": "^5.0.0",
 		"pretty-bytes": "^6.1.1",
 		"pretty-ms": "^9.0.0",
-		"tsx": "^4.7.0",
+		"tsx": "^4.7.1",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.12"
+		"vite": "^5.1.4"
 	},
 	"publishConfig": {
 		"access": "public"
