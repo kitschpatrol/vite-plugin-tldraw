@@ -46,7 +46,8 @@
 		"diagram",
 		"drawing",
 		"sketch",
-		"import"
+		"import",
+		"npm-package"
 	],
 	"scripts": {
 		"build": "pnpm build:plugin",
@@ -63,9 +64,9 @@
 		"@kitschpatrol/tldraw-cli": "^4.1.2"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.4.2",
+		"@kitschpatrol/shared-config": "^4.5.0",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.11.20",
+		"@types/node": "^20.11.24",
 		"bumpp": "^9.3.0",
 		"esbuild": "^0.20.1",
 		"nanoid": "^5.0.6",
