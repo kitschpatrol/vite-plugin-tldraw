@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@kitschpatrol/tldraw-cli':
-    specifier: ^4.2.0
-    version: 4.2.0(typescript@5.4.2)
+    specifier: ^4.3.1
+    version: 4.3.1(typescript@5.4.2)
 
 devDependencies:
   '@kitschpatrol/shared-config':
@@ -925,6 +925,9 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
+  /@fontsource/inter@5.0.17:
+    resolution: {integrity: sha512-2meBGx1kt7u5LwzGc5Sz5rka6ZDrydg6nT3x6Wkt310vHXUchIywrO8pooWMzZdHYcyFY/cv4lEpJZgMD94bCg==}
+
   /@html-eslint/eslint-plugin@0.23.1:
     resolution: {integrity: sha512-2AU58FZSPPHjNJzuv08GfgU/nfrVgNI4Uj9y6KOaU5egzAf1DO5x6HeZwvS0MPBAduqoC0i1RqHNSQrzCcmB7A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -1254,11 +1257,12 @@ packages:
       - typescript
     dev: true
 
-  /@kitschpatrol/tldraw-cli@4.2.0(typescript@5.4.2):
-    resolution: {integrity: sha512-7lM33axHG0Dhi/GAE2UchIfMSnSPPFHBd0LUdmlxD58uQb/oBLLApl2AymTiCI//Tw5fm90a2KqdG3k++heKTQ==}
+  /@kitschpatrol/tldraw-cli@4.3.1(typescript@5.4.2):
+    resolution: {integrity: sha512-d8Ki5/Gs8eXfMJ7+HTwpn2Tom6npU814rugSdZF8ZgEq6aEQSAxh2tKYGhmk9n7GWGM+KfWdfeYNYphZpA1/hA==}
     engines: {node: '>=18.0.0', pnpm: '>=8.0.0'}
     hasBin: true
     dependencies:
+      '@fontsource/inter': 5.0.17
       express: 4.18.3
       puppeteer: 22.5.0(typescript@5.4.2)
       uint8array-extras: 1.1.0
@@ -3081,11 +3085,11 @@ packages:
   /escalade@3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
+    dev: true
 
   /escalade@3.1.2:
     resolution: {integrity: sha512-ErCHMCae19vR8vQGe50xIsVomy19rg6gFu3+r3jkEO46suLMWBksvVyoGgQV+jOfl84ZSOSlmv6Gxa89PmTGmA==}
     engines: {node: '>=6'}
-    dev: true
 
   /escape-html@1.0.3:
     resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
@@ -5088,7 +5092,7 @@ packages:
     hasBin: true
     dependencies:
       '@clack/prompts': 0.7.0
-      '@kitschpatrol/tldraw-cli': 4.2.0(typescript@5.4.2)
+      '@kitschpatrol/tldraw-cli': 4.3.1(typescript@5.4.2)
       '@types/mdast': 4.0.3
       '@types/unist': 3.0.2
       chalk: 5.3.0
@@ -8695,7 +8699,7 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       cliui: 8.0.1
-      escalade: 3.1.1
+      escalade: 3.1.2
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.3

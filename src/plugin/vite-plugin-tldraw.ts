@@ -23,13 +23,13 @@ export type TldrawPluginOptions = {
 
 export type TldrawImageOptions = Pick<
 	TldrawCliImageOptions,
-	'dark' | 'format' | 'stripStyle' | 'transparent'
+	'dark' | 'format' | 'padding' | 'scale' | 'stripStyle' | 'transparent'
 >
 
 export default function tldraw(options?: TldrawPluginOptions): Plugin {
 	// Merge user options with defaults
 	const resolvedOptions: Required<TldrawPluginOptions> & {
-		defaultImageOptions: Required<TldrawImageOptions>
+		defaultImageOptions: TldrawImageOptions
 	} = {
 		cacheEnabled: true,
 		defaultImageOptions: {
@@ -67,7 +67,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				// 1. URL search params provided in the module import url
 				// 2. TldrawImageOptions passed in plugin options
 				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
-				const mergedImageOptions: Required<TldrawImageOptions> & {
+				const mergedImageOptions: TldrawImageOptions & {
 					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single frame name here
 					frame?: string
@@ -87,7 +87,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 				// Sort out options
 				const { cacheEnabled, verbose } = resolvedOptions
-				const { dark, format, frame, stripStyle, transparent } = mergedImageOptions
+				const { dark, format, frame, padding, scale, stripStyle, transparent } = mergedImageOptions
 				const frameName = frame ? slugify(frame) : undefined
 
 				const sourceCacheFilename = `${[sourceFilename, frameName, sourceHash]
@@ -129,6 +129,8 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 						frames: frame ? [frame] : false,
 						name: nanoid(), // Unique temp name to avoid collisions
 						output: cacheDirectory,
+						padding,
+						scale,
 						stripStyle,
 						transparent,
 					})

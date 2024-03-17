@@ -62,7 +62,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.2.0"
+		"@kitschpatrol/tldraw-cli": "^4.3.1"
 	},
 	"devDependencies": {
 		"@kitschpatrol/shared-config": "^4.5.0",
