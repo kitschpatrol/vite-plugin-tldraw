@@ -19,24 +19,6 @@
 
 <!-- /description -->
 
-<!-- table-of-contents { depth: 2 } -->
-
-## Table of contents
-
-- [Overview](#overview)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Plugin Options](#plugin-options)
-- [Import path options](#import-path-options)
-- [Implementation notes](#implementation-notes)
-- [The future](#the-future)
-- [References](#references)
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
-- [License](#license)
-
-<!-- /table-of-contents -->
-
 ## Overview
 
 **A [Vite](https://vitejs.dev) plugin to automate the import and conversion of local [tldraw](https://tldraw.dev) `.tldr` files into SVG or PNG image assets.**
