@@ -18,7 +18,7 @@
 		"url": "https://ericmika.com"
 	},
 	"license": "MIT",
-	"packageManager": "pnpm@8.15.5",
+	"packageManager": "pnpm@8.15.6",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=8.0.0"
@@ -62,21 +62,21 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.3.2"
+		"@kitschpatrol/tldraw-cli": "^4.4.0"
 	},
 	"devDependencies": {
 		"@kitschpatrol/shared-config": "^4.6.1",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.11.30",
+		"@types/node": "^20.12.4",
 		"bumpp": "^9.4.0",
 		"esbuild": "^0.20.2",
 		"nanoid": "^5.0.6",
 		"path-type": "^5.0.0",
 		"pretty-bytes": "^6.1.1",
 		"pretty-ms": "^9.0.0",
-		"tsx": "^4.7.1",
-		"typescript": "^5.4.3",
-		"vite": "^5.1.7"
+		"tsx": "^4.7.2",
+		"typescript": "^5.4.4",
+		"vite": "^5.2.8"
 	},
 	"publishConfig": {
 		"access": "public"
