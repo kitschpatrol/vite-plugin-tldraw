@@ -69,8 +69,11 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
 				const mergedImageOptions: TldrawImageOptions & {
 					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
-					// between input and output files, we only support a single frame name here
+					// between input and output files, we only support a single frame name or id here
 					frame?: string
+					// Tldraw-cli supports arrays of page names, but to maintain 1:1 relationship
+					// between input and output files, we only support a single page name or id here
+					page?: string
 				} = {
 					...resolvedOptions.defaultImageOptions,
 					...stripUndefined(imageOptions),
@@ -87,10 +90,12 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 				// Sort out options
 				const { cacheEnabled, verbose } = resolvedOptions
-				const { dark, format, frame, padding, scale, stripStyle, transparent } = mergedImageOptions
+				const { dark, format, frame, padding, page, scale, stripStyle, transparent } =
+					mergedImageOptions
+				const pageName = page ? slugify(page) : undefined
 				const frameName = frame ? slugify(frame) : undefined
 
-				const sourceCacheFilename = `${[sourceFilename, frameName, sourceHash]
+				const sourceCacheFilename = `${[sourceFilename, pageName, frameName, sourceHash]
 					.filter((element) => element !== undefined)
 					.join('-')}.${format}`
 				const sourceCachePath = path.join(cacheDirectory, sourceCacheFilename)
@@ -130,6 +135,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 						name: nanoid(), // Unique temp name to avoid collisions
 						output: cacheDirectory,
 						padding,
+						pages: page ? [page] : false,
 						scale,
 						stripStyle,
 						transparent,

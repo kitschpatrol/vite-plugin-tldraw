@@ -164,11 +164,12 @@ _Note: Due to [constraints in TypeScript's module declaration wildcards](https:/
 
 ### Additional query parameter options
 
-In addition to all `TldrawImageOptions`, query parameters also accept a `frame` option:
+In addition to all `TldrawImageOptions`, query parameters also accept additional options for selecting specific parts of a sketch:
 
 | Key     | Type                  | Description                                                                                                                                                                              | Default     |
 | ------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `frame` | `string \| undefined` | When defined, outputs only a specific frame from the `.tldr` file. Provide either the frame name or its shape ID, e.g. `Frame 1`. Slugified frame names will also match, e.g. `frame-1`. | `undefined` |
+| `page`  | `string \| undefined` | When defined, outputs only a specific page from the `.tldr` file. Provide either the frame name or its page ID, e.g. `Page 1`. Slugified frame names will also match, e.g. `page-1`.     | `undefined` |
 
 ### Import path query parameter examples
 
