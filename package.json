@@ -62,15 +62,15 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.4.0"
+		"@kitschpatrol/tldraw-cli": "^4.5.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.6.1",
+		"@kitschpatrol/shared-config": "^4.6.2",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.12.4",
+		"@types/node": "^20.12.5",
 		"bumpp": "^9.4.0",
 		"esbuild": "^0.20.2",
-		"nanoid": "^5.0.6",
+		"nanoid": "^5.0.7",
 		"path-type": "^5.0.0",
 		"pretty-bytes": "^6.1.1",
 		"pretty-ms": "^9.0.0",
