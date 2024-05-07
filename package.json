@@ -18,7 +18,7 @@
 		"url": "https://ericmika.com"
 	},
 	"license": "MIT",
-	"packageManager": "pnpm@8.15.7",
+	"packageManager": "pnpm@9.1.0",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=8.0.0"
@@ -54,6 +54,7 @@
 		"build": "pnpm build:plugin",
 		"build:demo": "vite build",
 		"build:plugin": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.plugin.json",
+		"clear-cache": "rm -rf node_modules/.vite/tldr",
 		"dev": "vite",
 		"fix": "shared-config --fix",
 		"lint": "shared-config --lint",
@@ -62,21 +63,21 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.5.2"
+		"@kitschpatrol/tldraw-cli": "^4.5.3"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.6.2",
+		"@kitschpatrol/shared-config": "^4.6.3",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.12.7",
-		"bumpp": "^9.4.0",
-		"esbuild": "^0.20.2",
+		"@types/node": "^20.12.10",
+		"bumpp": "^9.4.1",
+		"esbuild": "^0.21.1",
 		"nanoid": "^5.0.7",
 		"path-type": "^5.0.0",
 		"pretty-bytes": "^6.1.1",
 		"pretty-ms": "^9.0.0",
-		"tsx": "^4.7.2",
+		"tsx": "^4.9.3",
 		"typescript": "^5.4.5",
-		"vite": "^5.2.8"
+		"vite": "^5.2.11"
 	},
 	"publishConfig": {
 		"access": "public"

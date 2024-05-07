@@ -28,9 +28,9 @@ export type TldrawImageOptions = Pick<
 
 export default function tldraw(options?: TldrawPluginOptions): Plugin {
 	// Merge user options with defaults
-	const resolvedOptions: Required<TldrawPluginOptions> & {
+	const resolvedOptions: {
 		defaultImageOptions: TldrawImageOptions
-	} = {
+	} & Required<TldrawPluginOptions> = {
 		cacheEnabled: true,
 		defaultImageOptions: {
 			dark: false,
@@ -67,14 +67,14 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				// 1. URL search params provided in the module import url
 				// 2. TldrawImageOptions passed in plugin options
 				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
-				const mergedImageOptions: TldrawImageOptions & {
+				const mergedImageOptions: {
 					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single frame name or id here
 					frame?: string
 					// Tldraw-cli supports arrays of page names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single page name or id here
 					page?: string
-				} = {
+				} & TldrawImageOptions = {
 					...resolvedOptions.defaultImageOptions,
 					...stripUndefined(imageOptions),
 				}
