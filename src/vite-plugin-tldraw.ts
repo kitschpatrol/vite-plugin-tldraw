@@ -10,7 +10,7 @@ import path from 'node:path'
 import { isFile } from 'path-type'
 import prettyBytes from 'pretty-bytes'
 import prettyMilliseconds from 'pretty-ms'
-import { type Plugin, normalizePath } from 'vite'
+import { normalizePath, type Plugin } from 'vite'
 
 // Returns a URL to an svg generated from the tldr file
 // Pass any values from TldrawImageOptions as params in the URL

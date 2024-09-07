@@ -2,7 +2,7 @@ import esbuild from 'esbuild'
 
 await esbuild.build({
 	bundle: true,
-	entryPoints: ['src/plugin/index.ts'],
+	entryPoints: ['src/vite-plugin-tldraw.ts'],
 	external: ['@kitschpatrol/tldraw-cli', 'vite'],
 	format: 'esm',
 	minify: true,

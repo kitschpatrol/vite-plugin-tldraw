@@ -18,7 +18,7 @@
 		"url": "https://ericmika.com"
 	},
 	"license": "MIT",
-	"packageManager": "pnpm@9.5.0",
+	"packageManager": "pnpm@9.9.0",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=9.0.0"
@@ -51,34 +51,33 @@
 		"npm-package"
 	],
 	"scripts": {
-		"build": "pnpm build:plugin",
-		"build:demo": "vite build",
-		"build:plugin": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.plugin.json",
-		"clean": "rm ./pnpm-lock.yaml && git clean -fdX",
-		"clear-cache": "rm -rf node_modules/.vite/tldr",
-		"dev": "vite",
+		"build": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.plugin.json",
+		"clean": "rimraf ./pnpm-lock.yaml && git clean -fdX",
+		"clear-cache": "rimraf node_modules/.vite/tldr",
 		"fix": "shared-config --fix",
 		"lint": "shared-config --lint",
-		"preview": "vite preview",
 		"release": "pnpm bumpp --commit 'Release: %s' && pnpm build && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.8"
+		"@kitschpatrol/tldraw-cli": "^4.6.13"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.7.2",
+		"@kitschpatrol/shared-config": "^4.7.5",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.14.10",
-		"bumpp": "^9.4.1",
-		"esbuild": "^0.23.0",
+		"@types/node": "^20.16.5",
+		"@vitest/browser": "^2.0.5",
+		"bumpp": "^9.5.2",
+		"esbuild": "^0.23.1",
 		"nanoid": "^5.0.7",
-		"path-type": "^5.0.0",
+		"path-type": "^6.0.0",
 		"pretty-bytes": "^6.1.1",
-		"pretty-ms": "^9.0.0",
-		"tsx": "^4.16.2",
-		"typescript": "^5.5.3",
-		"vite": "^5.3.3"
+		"pretty-ms": "^9.1.0",
+		"rimraf": "^6.0.1",
+		"tsx": "^4.19.0",
+		"typescript": "^5.5.4",
+		"vite": "^5.4.3",
+		"vitest": "^2.0.5"
 	},
 	"publishConfig": {
 		"access": "public"

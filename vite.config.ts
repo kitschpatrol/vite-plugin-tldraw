@@ -1,15 +1,13 @@
-import tldrPlugin from './src/plugin'
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vite'
+import tldrPlugin from './src/vite-plugin-tldraw'
 
 export default defineConfig({
-	build: {
-		copyPublicDir: false,
-		emptyOutDir: true,
-		outDir: '../../dist-demo',
-	},
 	plugins: [tldrPlugin({ verbose: true })],
-	// Some contortions to get the path to the cache
-	// to work from a subfolder
-	publicDir: '../../',
-	root: './src/demo',
+	root: './test/assets',
+	test: {
+		dir: 'test',
+	},
 })
