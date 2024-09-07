@@ -2,7 +2,7 @@
 /// <reference types="vitest" />
 
 import { defineConfig } from 'vite'
-import tldrPlugin from './src/vite-plugin-tldraw'
+import tldrPlugin from './src'
 
 export default defineConfig({
 	plugins: [tldrPlugin({ verbose: true })],
