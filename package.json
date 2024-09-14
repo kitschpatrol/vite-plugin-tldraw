@@ -50,14 +50,14 @@
 		"clear-cache": "rimraf node_modules/.vite/tldr",
 		"fix": "shared-config --fix",
 		"lint": "shared-config --lint",
-		"release": "pnpm bumpp --commit 'Release: %s' && pnpm build && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
+		"release": "bumpp --commit 'Release: %s' && pnpm run build && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.15"
+		"@kitschpatrol/tldraw-cli": "^4.6.16"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.7.6",
+		"@kitschpatrol/shared-config": "^4.7.9",
 		"@sindresorhus/slugify": "^2.2.1",
 		"@types/node": "18.0.0",
 		"@vitest/browser": "^2.1.1",
