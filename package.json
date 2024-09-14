@@ -3,22 +3,16 @@
 	"version": "2.3.5",
 	"type": "module",
 	"description": "Vite plugin enabling module-like import of local tldraw .tldr files with automatic conversion to SVG or PNG.",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/kitschpatrol/vite-plugin-tldraw.git"
-	},
+	"repository": "github:kitschpatrol/vite-plugin-tldraw",
 	"homepage": "https://github.com/kitschpatrol/vite-plugin-tldraw",
-	"bugs": {
-		"url": "https://github.com/kitschpatrol/vite-plugin-tldraw/issues",
-		"email": "eric@ericmika.com"
-	},
+	"bugs": "https://github.com/kitschpatrol/vite-plugin-tldraw/issues",
 	"author": {
 		"name": "Eric Mika",
 		"email": "eric@ericmika.com",
 		"url": "https://ericmika.com"
 	},
 	"license": "MIT",
-	"packageManager": "pnpm@9.9.0",
+	"packageManager": "pnpm@9.10.0",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=9.0.0"
@@ -52,7 +46,7 @@
 	],
 	"scripts": {
 		"build": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.plugin.json",
-		"clean": "rimraf ./pnpm-lock.yaml && git clean -fdX",
+		"clean": "git rm -f pnpm-lock.yaml ; git clean -fdX",
 		"clear-cache": "rimraf node_modules/.vite/tldr",
 		"fix": "shared-config --fix",
 		"lint": "shared-config --lint",
@@ -60,13 +54,13 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.13"
+		"@kitschpatrol/tldraw-cli": "^4.6.15"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.7.5",
+		"@kitschpatrol/shared-config": "^4.7.6",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.16.5",
-		"@vitest/browser": "^2.0.5",
+		"@types/node": "18.0.0",
+		"@vitest/browser": "^2.1.1",
 		"bumpp": "^9.5.2",
 		"esbuild": "^0.23.1",
 		"nanoid": "^5.0.7",
@@ -74,10 +68,10 @@
 		"pretty-bytes": "^6.1.1",
 		"pretty-ms": "^9.1.0",
 		"rimraf": "^6.0.1",
-		"tsx": "^4.19.0",
-		"typescript": "^5.5.4",
-		"vite": "^5.4.3",
-		"vitest": "^2.0.5"
+		"tsx": "^4.19.1",
+		"typescript": "^5.6.2",
+		"vite": "^5.4.5",
+		"vitest": "^2.1.1"
 	},
 	"publishConfig": {
 		"access": "public"
