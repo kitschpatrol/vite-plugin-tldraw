@@ -52,24 +52,24 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.19"
+		"@kitschpatrol/tldraw-cli": "^4.6.31"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.0.6",
+		"@kitschpatrol/shared-config": "^5.0.8",
 		"@sindresorhus/slugify": "^2.2.1",
 		"@types/node": "18.0.0",
-		"@vitest/browser": "^2.1.1",
-		"bumpp": "^9.6.0",
-		"esbuild": "^0.24.0",
-		"nanoid": "^5.0.7",
+		"@vitest/browser": "^3.0.7",
+		"bumpp": "^10.0.3",
+		"esbuild": "^0.25.0",
+		"nanoid": "^5.1.2",
 		"path-type": "^6.0.0",
 		"pretty-bytes": "^6.1.1",
-		"pretty-ms": "^9.1.0",
+		"pretty-ms": "^9.2.0",
 		"rimraf": "^6.0.1",
-		"tsx": "^4.19.1",
+		"tsx": "^4.19.3",
 		"typescript": "~5.7.3",
-		"vite": "^5.4.8",
-		"vitest": "^2.1.1"
+		"vite": "^6.2.0",
+		"vitest": "^3.0.7"
 	},
 	"packageManager": "pnpm@10.5.2",
 	"engines": {
