@@ -1,10 +1,14 @@
 import { expect, it } from 'vitest'
+import tldrFileFrame from './assets/test-sketch-three-frames.tldr?frame=frame-3&tldr'
 import tldrFile from './assets/test-sketch.tldr'
-import tldrFileWithParams4 from './assets/test-sketch.tldr?format=png&scale=4&tldr'
+
+/* eslint-disable perfectionist/sort-imports */
 import tldrFileWithParams from './assets/test-sketch.tldr?format=png&transparent=true&tldr'
 import tldrFileWithParams2 from './assets/test-sketch.tldr?format=svg&dark=true&tldr'
 import tldrFileWithParams3 from './assets/test-sketch.tldr?format=svg&padding=200&tldr'
-import tldrFileFrame from './assets/test-sketch-three-frames.tldr?frame=frame-3&tldr'
+import tldrFileWithParams4 from './assets/test-sketch.tldr?format=png&scale=4&tldr'
+/* eslint-enable perfectionist/sort-imports */
+
 // Cspell:disable-next-line
 import tldrFilePageWithFrame from './assets/test-sketch-three-pages.tldr?page=page-2&frame=gVS4O2yNqyRKDV4lp3Trd&tldr'
 import tldrFilePage from './assets/test-sketch-three-pages.tldr?page=page-2&tldr'

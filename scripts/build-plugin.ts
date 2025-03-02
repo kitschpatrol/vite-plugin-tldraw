@@ -1,6 +1,6 @@
-import esbuild from 'esbuild'
+import { build } from 'esbuild'
 
-await esbuild.build({
+await build({
 	bundle: true,
 	entryPoints: ['src/index.ts'],
 	external: ['@kitschpatrol/tldraw-cli', 'vite'],
@@ -8,5 +8,5 @@ await esbuild.build({
 	minify: true,
 	outfile: 'dist/index.js',
 	platform: 'node',
-	target: 'node18',
+	target: 'node20',
 })

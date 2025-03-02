@@ -26,19 +26,19 @@
 This allows `.tldr` files to be imported just like regular `.webp`, `.jpeg` etc. files in Vite-powered projects:
 
 ```ts
-// main.ts
-import tldrImage from './assets/test-sketch.tldr'
+// Main.ts
+import tldrImage from './test/assets/test-sketch.tldr'
 
 const body = document.querySelector<HTMLDivElement>('body')
 if (body) body.innerHTML = `<img src="${tldrImage}" />`
 ```
 
-The above transforms `./assets/test-sketch.tldr` into `./assets/test-sketch-{hash}.svg`, caches the output file, and then returns an SVG URL ready to be passed to an `img` element's `src` attribute.
+The above transforms `./test/assets/test-sketch.tldr` into `./test/assets/test-sketch-{hash}.svg`, caches the output file, and then returns an SVG URL ready to be passed to an `img` element's `src` attribute.
 
 The plugin provides a global configuration object to customize of several aspects of the conversion process, and also allows overrides on a per-import basis via query parameters on the asset import path, e.g.:
 
 ```ts
-import tldrImage from './assets/test-sketch.tldr?format=png&tldr'
+import tldrImage from './test/assets/test-sketch.tldr?format=png&tldr'
 ```
 
 _For lower-level processing of `.tldr` files in Node projects or via the command line, please see [@kitschpatrol/tldraw-cli](https://github.com/kitschpatrol/tldraw-cli)._
@@ -56,7 +56,7 @@ npm install --save-dev @kitschpatrol/vite-plugin-tldraw
 ### 2. Add the plugin to your `vite.config` file
 
 ```ts
-// vite.config.ts
+// Vite.config.ts
 import tldraw from '@kitschpatrol/vite-plugin-tldraw'
 import { defineConfig } from 'vite'
 
@@ -88,7 +88,7 @@ Alternately, you can add a triple-slash package dependency directive to your glo
 This step should take care of errors like:
 
 ```sh
-Cannot find module './assets/test-sketch.tldr' or its corresponding type declarations.ts(2307)
+Cannot find module './test/assets/test-sketch.tldr' or its corresponding type declarations.ts(2307)
 ```
 
 ## Usage
@@ -100,8 +100,8 @@ Add it to your project, most likely in an `assets` folder.
 Then simply import the `.tldr` file to get a working asset URL:
 
 ```ts
-// example.ts
-import tldrImage from './assets/test-sketch.tldr'
+// Example.ts
+import tldrImage from './test/assets/test-sketch.tldr'
 
 // Logs a working SVG URL
 console.log(tldrImage)
@@ -137,16 +137,16 @@ See the sections below for additional conversion options.
 Configure the plugin to always generate PNGs with a transparent background, and to log conversion details:
 
 ```ts
-// vite.config.ts
+// Vite.config.ts
 import tldraw from '@kitschpatrol/vite-plugin-tldraw'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
     tldraw({
-      verbose: true,
       format: 'png',
       transparent: true,
+      verbose: true,
     }),
   ],
 })
@@ -174,10 +174,10 @@ In addition to all `TldrawImageOptions`, query parameters also accept additional
 ### Import path query parameter examples
 
 ```ts
-// example.ts
-import tldrImagePng from './assets/test-sketch.tldr?format=png&tldr'
-import tldrImageTransparentPng from './assets/test-sketch.tldr?format=png&transparent=true&tldr'
-import tldrImageFrame from './assets/test-sketch-three-frames.tldr?frame=frame-1&tldr'
+// Example.ts
+import tldrImageFrame from './test/assets/test-sketch-three-frames.tldr?frame=frame-1&tldr'
+import tldrImagePng from './test/assets/test-sketch.tldr?format=png&tldr'
+import tldrImageTransparentPng from './test/assets/test-sketch.tldr?format=png&transparent=true&tldr'
 
 // Logs a PNG URL
 console.log(tldrImagePng)
@@ -217,21 +217,21 @@ Some links and issues from development are retained for my own reference below:
 
 **TypeScript module query parameter compatibility:**
 
-- <https://github.com/microsoft/TypeScript/issues/38638>
-- <https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules>
-- <https://github.com/JonasKruckenberg/imagetools/issues/70>
-- <https://github.com/JonasKruckenberg/imagetools/issues/160>
+- https://github.com/microsoft/TypeScript/issues/38638
+- https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules
+- https://github.com/JonasKruckenberg/imagetools/issues/70
+- https://github.com/JonasKruckenberg/imagetools/issues/160
 
 **Vite asset plugin approach:**
 
-- <https://github.com/vitejs/vite/discussions/7515>
-- <https://liana.one/custom-language-plugin-for-vite>
-- <https://github.com/UstymUkhman/vite-plugin-glsl>
+- https://github.com/vitejs/vite/discussions/7515
+- https://liana.one/custom-language-plugin-for-vite
+- https://github.com/UstymUkhman/vite-plugin-glsl
 
 **Vite asset Path issues:**
 
-- <https://github.com/vitejs/vite/issues/2394>
-- <https://github.com/vitejs/vite/issues/1997>
+- https://github.com/vitejs/vite/issues/2394
+- https://github.com/vitejs/vite/issues/1997
 
 ## Maintainers
 

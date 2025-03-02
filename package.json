@@ -1,38 +1,7 @@
 {
 	"name": "@kitschpatrol/vite-plugin-tldraw",
 	"version": "2.3.8",
-	"type": "module",
 	"description": "Vite plugin enabling module-like import of local tldraw .tldr files with automatic conversion to SVG or PNG.",
-	"repository": "github:kitschpatrol/vite-plugin-tldraw",
-	"homepage": "https://github.com/kitschpatrol/vite-plugin-tldraw",
-	"bugs": "https://github.com/kitschpatrol/vite-plugin-tldraw/issues",
-	"author": {
-		"name": "Eric Mika",
-		"email": "eric@ericmika.com",
-		"url": "https://ericmika.com"
-	},
-	"license": "MIT",
-	"packageManager": "pnpm@9.11.0",
-	"engines": {
-		"node": ">=18.0.0",
-		"pnpm": ">=9.0.0"
-	},
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
-		},
-		"./ext": {
-			"types": "./ext.d.ts"
-		}
-	},
-	"types": "./dist/index.d.ts",
-	"files": [
-		"./ext.d.ts",
-		"dist"
-	],
 	"keywords": [
 		"vite-plugin",
 		"tldraw",
@@ -44,12 +13,41 @@
 		"import",
 		"npm-package"
 	],
+	"homepage": "https://github.com/kitschpatrol/vite-plugin-tldraw",
+	"bugs": "https://github.com/kitschpatrol/vite-plugin-tldraw/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/github:kitschpatrol/vite-plugin-tldraw"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Eric Mika",
+		"email": "eric@ericmika.com",
+		"url": "https://ericmika.com"
+	},
+	"type": "module",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./ext": {
+			"types": "./ext.d.ts"
+		}
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"./ext.d.ts",
+		"dist"
+	],
 	"scripts": {
-		"build": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.plugin.json",
+		"build": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.build.json",
 		"clean": "git rm -f pnpm-lock.yaml ; git clean -fdX",
 		"clear-cache": "rimraf node_modules/.vite/tldr",
-		"fix": "shared-config --fix",
-		"lint": "shared-config --lint",
+		"fix": "kpi fix",
+		"lint": "kpi lint",
 		"release": "bumpp --commit 'Release: %s' && pnpm run build && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
 		"test": "vitest"
 	},
@@ -57,7 +55,7 @@
 		"@kitschpatrol/tldraw-cli": "^4.6.19"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^4.7.10",
+		"@kitschpatrol/shared-config": "^5.0.6",
 		"@sindresorhus/slugify": "^2.2.1",
 		"@types/node": "18.0.0",
 		"@vitest/browser": "^2.1.1",
@@ -69,11 +67,25 @@
 		"pretty-ms": "^9.1.0",
 		"rimraf": "^6.0.1",
 		"tsx": "^4.19.1",
-		"typescript": "^5.6.2",
+		"typescript": "~5.7.3",
 		"vite": "^5.4.8",
 		"vitest": "^2.1.1"
 	},
+	"packageManager": "pnpm@10.5.2",
+	"engines": {
+		"node": ">=20.9.0"
+	},
 	"publishConfig": {
 		"access": "public"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"msw",
+			"puppeteer"
+		],
+		"overrides": {
+			"eslint-plugin-markdown": "^5.1.0"
+		}
 	}
 }

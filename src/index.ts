@@ -26,11 +26,14 @@ export type TldrawImageOptions = Pick<
 	'dark' | 'format' | 'padding' | 'scale' | 'stripStyle' | 'transparent'
 >
 
+/**
+ * Vite plugin to convert tldraw `.tldr` files to images on import
+ */
 export default function tldraw(options?: TldrawPluginOptions): Plugin {
 	// Merge user options with defaults
-	const resolvedOptions: {
+	const resolvedOptions: Required<TldrawPluginOptions> & {
 		defaultImageOptions: TldrawImageOptions
-	} & Required<TldrawPluginOptions> = {
+	} = {
 		cacheEnabled: true,
 		defaultImageOptions: {
 			dark: false,
@@ -67,14 +70,14 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				// 1. URL search params provided in the module import url
 				// 2. TldrawImageOptions passed in plugin options
 				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
-				const mergedImageOptions: {
+				const mergedImageOptions: TldrawImageOptions & {
 					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single frame name or id here
 					frame?: string
 					// Tldraw-cli supports arrays of page names, but to maintain 1:1 relationship
 					// between input and output files, we only support a single page name or id here
 					page?: string
-				} & TldrawImageOptions = {
+				} = {
 					...resolvedOptions.defaultImageOptions,
 					...stripUndefined(imageOptions),
 				}
@@ -190,6 +193,7 @@ async function getFileHash(filePath: string, tldrawOptions?: TldrawImageOptions)
 	return hash.digest('hex').slice(0, 8)
 }
 
+// eslint-disable-next-line ts/no-unnecessary-type-parameters
 function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 	const object: Record<string, unknown> = {}
 	for (const [key, value] of params.entries()) {
