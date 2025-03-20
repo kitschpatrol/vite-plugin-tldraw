@@ -52,26 +52,26 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.31"
+		"@kitschpatrol/tldraw-cli": "^4.6.33"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.2.0",
+		"@kitschpatrol/shared-config": "^5.3.1",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.17.23",
-		"@vitest/browser": "^3.0.7",
-		"bumpp": "^10.0.3",
-		"esbuild": "^0.25.0",
-		"nanoid": "^5.1.2",
+		"@types/node": "^20.17.24",
+		"@vitest/browser": "^3.0.9",
+		"bumpp": "^10.1.0",
+		"esbuild": "^0.25.1",
+		"nanoid": "^5.1.5",
 		"path-type": "^6.0.0",
 		"pretty-bytes": "^6.1.1",
 		"pretty-ms": "^9.2.0",
 		"rimraf": "^6.0.1",
 		"tsx": "^4.19.3",
-		"typescript": "~5.7.3",
-		"vite": "^6.2.0",
-		"vitest": "^3.0.7"
+		"typescript": "~5.8.2",
+		"vite": "^6.2.2",
+		"vitest": "^3.0.9"
 	},
-	"packageManager": "pnpm@10.5.2",
+	"packageManager": "pnpm@10.6.5",
 	"engines": {
 		"node": ">=20.9.0"
 	},
@@ -83,9 +83,6 @@
 			"esbuild",
 			"msw",
 			"puppeteer"
-		],
-		"overrides": {
-			"eslint-plugin-markdown": "^5.1.0"
-		}
+		]
 	}
 }
