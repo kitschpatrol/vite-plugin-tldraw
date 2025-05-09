@@ -52,26 +52,26 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.34"
+		"@kitschpatrol/tldraw-cli": "^4.6.37"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.3.1",
+		"@kitschpatrol/shared-config": "^5.4.0",
 		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.17.24",
-		"@vitest/browser": "^3.0.9",
+		"@types/node": "^20.17.46",
+		"@vitest/browser": "^3.1.3",
 		"bumpp": "^10.1.0",
-		"esbuild": "^0.25.1",
+		"esbuild": "^0.25.4",
 		"nanoid": "^5.1.5",
 		"path-type": "^6.0.0",
-		"pretty-bytes": "^6.1.1",
+		"pretty-bytes": "^7.0.0",
 		"pretty-ms": "^9.2.0",
 		"rimraf": "^6.0.1",
-		"tsx": "^4.19.3",
-		"typescript": "~5.8.2",
-		"vite": "^6.2.2",
-		"vitest": "^3.0.9"
+		"tsx": "^4.19.4",
+		"typescript": "~5.8.3",
+		"vite": "^6.3.5",
+		"vitest": "^3.1.3"
 	},
-	"packageManager": "pnpm@10.6.5",
+	"packageManager": "pnpm@10.10.0",
 	"engines": {
 		"node": ">=20.9.0"
 	},
@@ -82,7 +82,8 @@
 		"onlyBuiltDependencies": [
 			"esbuild",
 			"msw",
-			"puppeteer"
+			"puppeteer",
+			"unrs-resolver"
 		]
 	}
 }

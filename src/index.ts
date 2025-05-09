@@ -1,7 +1,6 @@
-import {
-	type TldrawToImageOptions as TldrawCliImageOptions,
-	tldrawToImage,
-} from '@kitschpatrol/tldraw-cli'
+import type { TldrawToImageOptions as TldrawCliImageOptions } from '@kitschpatrol/tldraw-cli'
+import type { Plugin } from 'vite'
+import { tldrawToImage } from '@kitschpatrol/tldraw-cli'
 import slugify from '@sindresorhus/slugify'
 import { nanoid } from 'nanoid'
 import crypto from 'node:crypto'
@@ -10,7 +9,7 @@ import path from 'node:path'
 import { isFile } from 'path-type'
 import prettyBytes from 'pretty-bytes'
 import prettyMilliseconds from 'pretty-ms'
-import { normalizePath, type Plugin } from 'vite'
+import { normalizePath } from 'vite'
 
 // Returns a URL to an svg generated from the tldr file
 // Pass any values from TldrawImageOptions as params in the URL
