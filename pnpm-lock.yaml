@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kitschpatrol/tldraw-cli':
-        specifier: ^4.6.42
-        version: 4.6.42(typescript@5.8.3)
+        specifier: ^4.6.43
+        version: 4.6.43(typescript@5.8.3)
     devDependencies:
       '@kitschpatrol/shared-config':
         specifier: ^5.5.0
@@ -708,8 +708,8 @@ packages:
     engines: {node: '>=20.9.0'}
     hasBin: true
 
-  '@kitschpatrol/tldraw-cli@4.6.42':
-    resolution: {integrity: sha512-mFXkI6FCNCD3e3OUgPRvYHjvP8Sup3f8sY59eR9P0tmQlzZhDezvWk4ij6EpwuBGKiTQT/ofKHs1nsF6fXVvmw==}
+  '@kitschpatrol/tldraw-cli@4.6.43':
+    resolution: {integrity: sha512-r/dA4Gx3c7aHYBfAd2o55FN3LKLjVG84N7krMwyE8dKfim7S/aW8t0BT037FBfivWugRo725N077XAppe2LYqw==}
     engines: {node: '>=20.9.0'}
     hasBin: true
 
@@ -5806,7 +5806,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@kitschpatrol/tldraw-cli@4.6.42(typescript@5.8.3)':
+  '@kitschpatrol/tldraw-cli@4.6.43(typescript@5.8.3)':
     dependencies:
       '@fontsource/inter': 5.2.6
       express: 4.21.2
@@ -8757,7 +8757,7 @@ snapshots:
   mdat@1.0.2(typescript@5.8.3):
     dependencies:
       '@clack/prompts': 0.10.1
-      '@kitschpatrol/tldraw-cli': 4.6.42(typescript@5.8.3)
+      '@kitschpatrol/tldraw-cli': 4.6.43(typescript@5.8.3)
       '@types/mdast': 4.0.4
       '@types/node': 18.19.122
       '@types/unist': 3.0.3

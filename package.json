@@ -52,7 +52,7 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.6.42"
+		"@kitschpatrol/tldraw-cli": "^4.6.43"
 	},
 	"devDependencies": {
 		"@kitschpatrol/shared-config": "^5.5.0",
