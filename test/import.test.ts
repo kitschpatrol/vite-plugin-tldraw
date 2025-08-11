@@ -12,27 +12,27 @@ import tldrFilePageWithFrame from './assets/test-sketch-three-pages.tldr?page=pa
 import tldrFilePage from './assets/test-sketch-three-pages.tldr?page=page-2&tldr'
 
 it('converts tldr files to images on import', () => {
-	expect(tldrFile).toMatchInlineSnapshot(`"node_modules/.vite/tldr/test-sketch-2d5c591d.svg"`)
+	expect(tldrFile).toMatchInlineSnapshot(`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-2d5c591d.svg"`)
 	expect(tldrFileWithParams4).toMatchInlineSnapshot(
-		`"node_modules/.vite/tldr/test-sketch-792b5668.png"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-792b5668.png"`,
 	)
 	expect(tldrFileWithParams).toMatchInlineSnapshot(
-		`"node_modules/.vite/tldr/test-sketch-ecbcca7e.png"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-ecbcca7e.png"`,
 	)
 	expect(tldrFileWithParams2).toMatchInlineSnapshot(
-		`"node_modules/.vite/tldr/test-sketch-83f3db27.svg"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-83f3db27.svg"`,
 	)
 	expect(tldrFileWithParams3).toMatchInlineSnapshot(
-		`"node_modules/.vite/tldr/test-sketch-e735e7ba.svg"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-e735e7ba.svg"`,
 	)
 	expect(tldrFileFrame).toMatchInlineSnapshot(
-		`"node_modules/.vite/tldr/test-sketch-three-frames-frame-3-7b88b7f0.svg"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-three-frames-frame-3-7b88b7f0.svg"`,
 	)
 	expect(tldrFilePageWithFrame).toMatchInlineSnapshot(
 		// Cspell:disable-next-line
-		`"node_modules/.vite/tldr/test-sketch-three-pages-page-2-g-vs-4-o2y-nqy-rkdv-4lp3-trd-878d9b80.svg"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-three-pages-page-2-g-vs-4-o2y-nqy-rkdv-4lp3-trd-878d9b80.svg"`,
 	)
 	expect(tldrFilePage).toMatchInlineSnapshot(
-		`"node_modules/.vite/tldr/test-sketch-three-pages-page-2-041effe6.svg"`,
+		`"test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-three-pages-page-2-041effe6.svg"`,
 	)
 })
