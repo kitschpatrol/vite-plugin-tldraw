@@ -199,6 +199,7 @@ function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 		object[key] = value
 	}
 
+	// eslint-disable-next-line ts/no-unsafe-type-assertion
 	return object as T
 }
 
