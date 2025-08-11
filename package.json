@@ -1,6 +1,6 @@
 {
 	"name": "@kitschpatrol/vite-plugin-tldraw",
-	"version": "3.0.4",
+	"version": "3.0.5",
 	"description": "Vite plugin enabling module-like import of local tldraw .tldr files with automatic conversion to SVG or PNG.",
 	"keywords": [
 		"vite-plugin",
