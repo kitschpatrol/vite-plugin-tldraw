@@ -45,14 +45,16 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 	}
 
 	let cacheDirectory = ''
-	let outputPath = ''
+	let assetsDirectory = ''
 	let isBuild = false
+	let basePath = '/'
 
 	return {
 		configResolved(config) {
 			cacheDirectory = path.join(config.cacheDir, 'tldr')
-			outputPath = config.build.assetsDir
+			assetsDirectory = config.build.assetsDir
 			isBuild = config.command === 'build'
+			basePath = config.base
 		},
 		name: 'vite-plugin-tldraw',
 		async transform(_, id) {
@@ -100,10 +102,13 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				const sourceCacheFilename = `${[sourceFilename, pageName, frameName, sourceHash]
 					.filter((element) => element !== undefined)
 					.join('-')}.${format}`
-				const sourceCachePath = path.join(cacheDirectory, sourceCacheFilename)
-				const sourceCachePathRelative = path.relative(
-					process.cwd(), // TODO - is this the right path?
-					sourceCachePath,
+				const sourceCachePathAbsolute = path.join(cacheDirectory, sourceCacheFilename)
+				const sourceCachePathProject = path.join(
+					'/',
+					path.relative(
+						process.cwd(), // TODO - is this the right path?
+						sourceCachePathAbsolute,
+					),
 				)
 
 				if (!cacheEnabled) {
@@ -111,12 +116,12 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				}
 
 				// Check for cache, generate svg from tldr if needed
-				const cacheIsValid = await isFile(sourceCachePath)
+				const cacheIsValid = await isFile(sourceCachePathAbsolute)
 
 				if (cacheIsValid) {
 					if (verbose) {
 						console.log(
-							`\n[vite-tldr-plugin] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathRelative}"`,
+							`\n[vite-tldr-plugin] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
 						)
 					}
 				} else {
@@ -125,7 +130,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 					if (verbose && cacheEnabled) {
 						console.log(
-							`\n[vite-tldr-plugin] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathRelative}"`,
+							`\n[vite-tldr-plugin] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
 						)
 					}
 
@@ -143,34 +148,36 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 						transparent,
 					})
 
-					await fs.rename(outputFile, sourceCachePath)
+					await fs.rename(outputFile, sourceCachePathAbsolute)
 
 					if (verbose) {
-						const sizeReport = await getPrettyFileSize(sourceCachePath)
+						const sizeReport = await getPrettyFileSize(sourceCachePathAbsolute)
 						const timeReport = prettyMilliseconds(performance.now() - startTime)
 						console.log(
-							`\n[vite-tldr-plugin] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathRelative}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
+							`\n[vite-tldr-plugin] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathProject}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
 						)
 					}
 				}
 
 				if (isBuild) {
 					// Copy to output dir if building
-					const outputFilePath = path.join(outputPath, sourceCacheFilename)
+					const outputFilePath = path.join(assetsDirectory, sourceCacheFilename)
 					this.emitFile({
 						fileName: outputFilePath,
-						source: await fs.readFile(sourceCachePath),
+						source: await fs.readFile(sourceCachePathAbsolute),
 						type: 'asset',
 					})
 
+					const exportPath = path.join(basePath, outputFilePath)
+
 					return {
-						code: `export default "${path.join('/', outputFilePath)}";`,
+						code: `export default "${exportPath}";`,
 					}
 				}
 
 				// Serve from cache if dev
 				return {
-					code: `export default "${sourceCachePathRelative}";`,
+					code: `export default "${sourceCachePathProject}";`,
 				}
 			}
 		},
