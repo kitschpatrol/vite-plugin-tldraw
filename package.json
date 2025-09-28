@@ -46,34 +46,34 @@
 		"build": "tsx ./scripts/build-plugin.ts && tsc -p tsconfig.build.json",
 		"clean": "git rm -f pnpm-lock.yaml ; git clean -fdX",
 		"clear-cache": "rimraf node_modules/.vite/tldr",
-		"fix": "kpi fix",
-		"lint": "kpi lint",
+		"fix": "ksc fix",
+		"lint": "ksc lint",
 		"release": "bumpp --commit 'Release: %s' && pnpm run build && pnpm publish --otp $(op read 'op://Personal/Npmjs/one-time password?attribute=otp')",
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^4.7.1"
+		"@kitschpatrol/tldraw-cli": "^5.0.0"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.5.0",
-		"@sindresorhus/slugify": "^2.2.1",
-		"@types/node": "^20.19.11",
+		"@kitschpatrol/shared-config": "^5.7.0",
+		"@sindresorhus/slugify": "^3.0.0",
+		"@types/node": "^20.19.17",
 		"@vitest/browser": "^3.2.4",
 		"bumpp": "^10.2.3",
-		"esbuild": "^0.25.9",
-		"nanoid": "^5.1.5",
+		"esbuild": "^0.25.10",
+		"nanoid": "^5.1.6",
 		"path-type": "^6.0.0",
-		"pretty-bytes": "^7.0.1",
-		"pretty-ms": "^9.2.0",
+		"pretty-bytes": "^7.1.0",
+		"pretty-ms": "^9.3.0",
 		"rimraf": "^6.0.1",
-		"tsx": "^4.20.5",
+		"tsx": "^4.20.6",
 		"typescript": "~5.9.2",
-		"vite": "^7.1.4",
+		"vite": "^7.1.7",
 		"vitest": "^3.2.4"
 	},
-	"packageManager": "pnpm@10.15.1",
+	"packageManager": "pnpm@10.17.1",
 	"engines": {
-		"node": ">=20.9.0"
+		"node": ">=20.19.0"
 	},
 	"publishConfig": {
 		"access": "public"
