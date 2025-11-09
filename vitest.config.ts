@@ -11,7 +11,13 @@ export default defineConfig({
 			headless: true,
 			instances: [{ browser: 'chromium' }],
 			provider: playwright(),
+			screenshotFailures: false,
 		},
 		dir: 'test',
+		env: {
+			// eslint-disable-next-line ts/naming-convention, node/no-unsupported-features/node-builtins
+			PROJECT_ROOT: import.meta.dirname,
+		},
+		silent: 'passed-only',
 	},
 })
