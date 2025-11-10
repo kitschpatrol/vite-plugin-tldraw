@@ -2,21 +2,24 @@ import type { TldrawToImageOptions as TldrawCliImageOptions } from '@kitschpatro
 import type { Plugin } from 'vite'
 import { tldrawToImage } from '@kitschpatrol/tldraw-cli'
 import slugify from '@sindresorhus/slugify'
+import { imageSizeFromFile as imageDimensionsFromFile } from 'image-size/fromFile'
 import { nanoid } from 'nanoid'
 import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { URLSearchParams } from 'node:url'
 import { isFile } from 'path-type'
 import prettyBytes from 'pretty-bytes'
 import prettyMilliseconds from 'pretty-ms'
 import { normalizePath } from 'vite'
 
-// Returns a URL to an svg generated from the tldr file
+// Returns a URL or metadata object to an svg or png generated from the tldr file
 // Pass any values from TldrawImageOptions as params in the URL
 
 export type TldrawPluginOptions = {
 	cacheEnabled?: boolean
 	defaultImageOptions?: TldrawImageOptions
+	returnMetadata?: boolean
 	verbose?: boolean
 }
 
@@ -24,6 +27,13 @@ export type TldrawImageOptions = Pick<
 	TldrawCliImageOptions,
 	'dark' | 'format' | 'padding' | 'scale' | 'stripStyle' | 'transparent'
 >
+
+export type TldrawImageResultMetadata = {
+	format: 'png' | 'svg'
+	height: number
+	src: string
+	width: number
+}
 
 /**
  * Vite plugin to convert tldraw `.tldr` files to images on import
@@ -40,6 +50,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 			stripStyle: false,
 			transparent: false,
 		},
+		returnMetadata: false,
 		verbose: false,
 		...stripUndefined(options),
 	}
@@ -159,6 +170,10 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 					}
 				}
 
+				const exportPath = isBuild
+					? path.join(basePath, path.join(assetsDirectory, sourceCacheFilename))
+					: sourceCachePathProject
+
 				if (isBuild) {
 					// Copy to output dir if building
 					const outputFilePath = path.join(assetsDirectory, sourceCacheFilename)
@@ -167,17 +182,43 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 						source: await fs.readFile(sourceCachePathAbsolute),
 						type: 'asset',
 					})
+				}
 
-					const exportPath = path.join(basePath, outputFilePath)
+				if (resolvedOptions.returnMetadata) {
+					const { width, height } = await imageDimensionsFromFile(sourceCachePathAbsolute)
 
+					if (format === 'tldr') {
+						throw new Error(
+							'tldr format is not supported as an export target in vite-plugin-tldraw',
+						)
+					}
+
+					const metadata: TldrawImageResultMetadata = {
+						format: format ?? 'svg',
+						height,
+						// Better to leave this to the consumer...
+						// src: path.posix.join(
+						// 	'/@fs',
+						// 	process.cwd(),
+						// 	`${exportPath}?${new URLSearchParams({
+						// 		/* eslint-disable perfectionist/sort-objects */
+						// 		origWidth: Math.round(width).toString(),
+						// 		origHeight: Math.round(height).toString(),
+						// 		origFormat: format ?? 'svg',
+						// 		/* eslint-enable perfectionist/sort-objects */
+						// 	}).toString()}`,
+						// ),
+						src: exportPath,
+						width,
+					}
 					return {
-						code: `export default "${exportPath}";`,
+						code: `export default ${JSON.stringify(metadata)};`,
 					}
 				}
 
-				// Serve from cache if dev
+				// Return just the URL string
 				return {
-					code: `export default "${sourceCachePathProject}";`,
+					code: `export default "${exportPath}";`,
 				}
 			}
 		},

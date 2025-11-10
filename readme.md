@@ -74,7 +74,7 @@ Add the extension declarations to your [types](https://www.typescriptlang.org/ts
 ```json
 {
   "compilerOptions": {
-    "types": ["@kitschpatrol/vite-plugin-tldraw/ext"]
+    "types": ["@kitschpatrol/vite-plugin-tldraw/client"]
   }
 }
 ```
@@ -82,7 +82,7 @@ Add the extension declarations to your [types](https://www.typescriptlang.org/ts
 Alternately, you can add a triple-slash package dependency directive to your global types file (e.g. `env.d.ts` or similar):
 
 ```ts
-/// <reference types="@kitschpatrol/vite-plugin-tldraw/ext" />
+/// <reference types="@kitschpatrol/vite-plugin-tldraw/client" />
 ```
 
 This step should take care of errors like:
@@ -119,6 +119,7 @@ See the sections below for additional conversion options.
 | --------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
 | `defaultImageOptions` | `TldrawImageOptions` | Default options object for all the image conversion process. See section below for more detail.                                                                                                                                                               | _See section below_ |
 | `cacheEnabled`        | `boolean`            | Caches generated image files. Hashes based on the source `.tldr` content _and_ any TldrawImageOptions or import query parameters ensure the cache regenerates as needed. Cached files are stored in Vite's `config.cacheDir` (usually `/node_modules/.vite`). | `true`              |
+| `returnMetadata`      | `boolean`            | Returns an object with some extra details on the image instead of a plain path string. Occasionally useful for integration with other platforms.                                                                                                              | `false`             |
 | `verbose`             | `boolean`            | Log information about the conversion process to the console.                                                                                                                                                                                                  | `false`             |
 
 ### `TldrawImageOptions`
@@ -176,11 +177,15 @@ In addition to all `TldrawImageOptions`, query parameters also accept additional
 ```ts
 // Example.ts
 import tldrImageFrame from './test/assets/test-sketch-three-frames.tldr?frame=frame-1&tldr'
+import tldrImageDark from './test/assets/test-sketch.tldr?dark=true&tldr'
 import tldrImagePng from './test/assets/test-sketch.tldr?format=png&tldr'
 import tldrImageTransparentPng from './test/assets/test-sketch.tldr?format=png&transparent=true&tldr'
 
 // Logs a PNG URL
 console.log(tldrImagePng)
+
+// Logs a dark-mode SVG URL
+console.log(tldrImageDark)
 
 // Logs a transparent-background PNG URL
 console.log(tldrImageTransparentPng)
@@ -191,23 +196,19 @@ console.log(tldrImageFrame)
 
 ## Implementation notes
 
-This tool is not a part of the official tldraw project, and it is currently only tested and known to be compatible with tldraw 2.0.0-beta.2.
+This tool is not a part of the official tldraw project.
 
 Behind the scenes, the plugin calls [@kitschpatrol/tldraw-cli](https://github.com/kitschpatrol/tldraw-cli)'s Node API to generate image files from `.tldr` files, and then passes the resulting URL as the value of the module import.
 
 Because [`tldraw-cli`](https://github.com/kitschpatrol/tldraw-cli) relies on the browser automation tool [Puppeteer](https://pptr.dev) for its output, conversion can be a bit slow (on the order of a second or two), so by default generated image assets are cached to expedite subsequent builds.
 
+The tldraw project evolves very quickly. This plugin is somewhat brittle because tldraw.com, the tldraw library, the `.tldr` file format, and my underlying cli export tool must all be in harmonious alignment for exports to work.
+
 During development, images are served from the cache, and when Vite builds for production the image files are bundled into the output with a hashed filename to simplify cache busting.
 
 ## The future
 
-Possible paths for future improvements include the following:
-
-- Rollup cross-compatibility
-- Support importing tldraw\.com URLs
-- SVG compression, PNG resizing / optimization (or test integration with other asset pipeline plugins)
-
-Any other suggestions are welcome.
+I'm planning to migrate to [unplugin](https://unplugin.unjs.io/) for support across bundlers.
 
 I'm consciously releasing this tool under the `@kitschpatrol` namespace on NPM to leave the `vite-plugin-tldraw` package name available to the core tldraw project.
 
@@ -217,21 +218,21 @@ Some links and issues from development are retained for my own reference below:
 
 **TypeScript module query parameter compatibility:**
 
-- https://github.com/microsoft/TypeScript/issues/38638
-- https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules
-- https://github.com/JonasKruckenberg/imagetools/issues/70
-- https://github.com/JonasKruckenberg/imagetools/issues/160
+- <https://github.com/microsoft/TypeScript/issues/38638>
+- <https://www.typescriptlang.org/docs/handbook/modules/reference.html#ambient-modules>
+- <https://github.com/JonasKruckenberg/imagetools/issues/70>
+- <https://github.com/JonasKruckenberg/imagetools/issues/160>
 
 **Vite asset plugin approach:**
 
-- https://github.com/vitejs/vite/discussions/7515
-- https://liana.one/custom-language-plugin-for-vite
-- https://github.com/UstymUkhman/vite-plugin-glsl
+- <https://github.com/vitejs/vite/discussions/7515>
+- <https://liana.one/custom-language-plugin-for-vite>
+- <https://github.com/UstymUkhman/vite-plugin-glsl>
 
 **Vite asset Path issues:**
 
-- https://github.com/vitejs/vite/issues/2394
-- https://github.com/vitejs/vite/issues/1997
+- <https://github.com/vitejs/vite/issues/2394>
+- <https://github.com/vitejs/vite/issues/1997>
 
 ## Maintainers
 

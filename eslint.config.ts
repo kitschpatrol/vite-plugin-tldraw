@@ -2,18 +2,12 @@ import { eslintConfig } from '@kitschpatrol/eslint-config'
 
 export default eslintConfig(
 	{
-		ignores: ['dist-demo/**/*'],
 		ts: {
 			overrides: {
 				'import/no-duplicates': 'off',
 			},
 		},
-	},
-	{
-		files: ['ext.d.ts'],
-		rules: {
-			'unicorn/prevent-abbreviations': 'off',
-		},
+		type: 'lib',
 	},
 	{
 		files: ['readme.md/*.ts'],
