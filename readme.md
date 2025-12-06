@@ -202,7 +202,7 @@ Behind the scenes, the plugin calls [@kitschpatrol/tldraw-cli](https://github.co
 
 Because [`tldraw-cli`](https://github.com/kitschpatrol/tldraw-cli) relies on the browser automation tool [Puppeteer](https://pptr.dev) for its output, conversion can be a bit slow (on the order of a second or two), so by default generated image assets are cached to expedite subsequent builds.
 
-The tldraw project evolves very quickly. This plugin is somewhat brittle because tldraw.com, the tldraw library, the `.tldr` file format, and my underlying cli export tool must all be in harmonious alignment for exports to work.
+The tldraw project evolves very quickly. This plugin is somewhat brittle because tldraw\.com, the tldraw library, the `.tldr` file format, and my underlying cli export tool must all be in harmonious alignment for exports to work.
 
 During development, images are served from the cache, and when Vite builds for production the image files are bundled into the output with a hashed filename to simplify cache busting.
 

@@ -2,7 +2,7 @@ import { defineConfig } from 'tsdown'
 
 export default defineConfig({
 	attw: {
-		profile: 'esmOnly',
+		profile: 'esm-only',
 	},
 	copy: ['src/client.d.ts'],
 	external: ['fsevents', 'vite'],
