@@ -55,7 +55,7 @@
 		"test": "vitest"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^5.0.6",
+		"@kitschpatrol/tldraw-cli": "^5.0.9",
 		"@sindresorhus/slugify": "^3.0.0",
 		"image-size": "^2.0.2",
 		"nanoid": "^5.1.6",
@@ -65,21 +65,21 @@
 	},
 	"devDependencies": {
 		"@arethetypeswrong/core": "^0.18.2",
-		"@kitschpatrol/shared-config": "^5.10.0",
-		"@types/node": "^20.19.25",
-		"@vitest/browser-playwright": "^4.0.15",
-		"bumpp": "^10.3.2",
-		"playwright": "^1.57.0",
+		"@kitschpatrol/shared-config": "^5.13.0",
+		"@types/node": "^20.19.30",
+		"@vitest/browser-playwright": "^4.0.18",
+		"bumpp": "^10.4.0",
+		"playwright": "^1.58.0",
 		"rimraf": "^6.1.2",
-		"tsdown": "^0.17.2",
+		"tsdown": "^0.20.1",
 		"typescript": "~5.9.3",
-		"vite": "^7.2.7",
-		"vitest": "^4.0.15"
+		"vite": "^7.3.1",
+		"vitest": "^4.0.18"
 	},
 	"peerDependencies": {
 		"vite": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
 	},
-	"packageManager": "pnpm@10.25.0",
+	"packageManager": "pnpm@10.28.2",
 	"engines": {
 		"node": ">=20.19.0"
 	},
