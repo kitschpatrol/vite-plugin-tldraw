@@ -61,11 +61,15 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 	let basePath = '/'
 
 	return {
-		configResolved(config) {
+		async configResolved(config) {
 			cacheDirectory = path.join(config.cacheDir, 'tldr')
 			assetsDirectory = config.build.assetsDir
 			isBuild = config.command === 'build'
 			basePath = config.base
+
+			if (!resolvedOptions.cacheEnabled) {
+				await fs.rm(cacheDirectory, { force: true, recursive: true })
+			}
 		},
 		name: 'vite-plugin-tldraw',
 		async transform(_, id) {
@@ -92,6 +96,10 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 				} = {
 					...resolvedOptions.defaultImageOptions,
 					...stripUndefined(imageOptions),
+				}
+
+				if (mergedImageOptions.format === 'tldr') {
+					throw new Error('tldr format is not supported as an export target in vite-plugin-tldraw')
 				}
 
 				// Sort out filenames
@@ -122,17 +130,13 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 					),
 				)
 
-				if (!cacheEnabled) {
-					await fs.rm(cacheDirectory, { recursive: true })
-				}
-
 				// Check for cache, generate svg from tldr if needed
 				const cacheIsValid = await isFile(sourceCachePathAbsolute)
 
 				if (cacheIsValid) {
 					if (verbose) {
 						console.log(
-							`\n[vite-tldr-plugin] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
+							`\n[vite-plugin-tldraw] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
 						)
 					}
 				} else {
@@ -141,7 +145,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 					if (verbose && cacheEnabled) {
 						console.log(
-							`\n[vite-tldr-plugin] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
+							`\n[vite-plugin-tldraw] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
 						)
 					}
 
@@ -165,7 +169,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 						const sizeReport = await getPrettyFileSize(sourceCachePathAbsolute)
 						const timeReport = prettyMilliseconds(performance.now() - startTime)
 						console.log(
-							`\n[vite-tldr-plugin] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathProject}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
+							`\n[vite-plugin-tldraw] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathProject}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
 						)
 					}
 				}
@@ -186,12 +190,6 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 
 				if (resolvedOptions.returnMetadata) {
 					const { width, height } = await imageDimensionsFromFile(sourceCachePathAbsolute)
-
-					if (format === 'tldr') {
-						throw new Error(
-							'tldr format is not supported as an export target in vite-plugin-tldraw',
-						)
-					}
 
 					const metadata: TldrawImageResultMetadata = {
 						format: format ?? 'svg',
@@ -244,7 +242,15 @@ async function getFileHash(filePath: string, tldrawOptions?: TldrawImageOptions)
 function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 	const object: Record<string, unknown> = {}
 	for (const [key, value] of params.entries()) {
-		object[key] = value
+		if (value === 'true') {
+			object[key] = true
+		} else if (value === 'false') {
+			object[key] = false
+		} else if (value !== '' && !Number.isNaN(Number(value))) {
+			object[key] = Number(value)
+		} else {
+			object[key] = value
+		}
 	}
 
 	// eslint-disable-next-line ts/no-unsafe-type-assertion

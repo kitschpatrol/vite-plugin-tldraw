@@ -16,16 +16,16 @@ it('converts tldr files to images on import', () => {
 		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-2d5c591d.svg"`,
 	)
 	expect(tldrFileWithParams4).toMatchInlineSnapshot(
-		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-792b5668.png"`,
+		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-c3450bd0.png"`,
 	)
 	expect(tldrFileWithParams).toMatchInlineSnapshot(
-		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-ecbcca7e.png"`,
+		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-9d5941e0.png"`,
 	)
 	expect(tldrFileWithParams2).toMatchInlineSnapshot(
-		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-83f3db27.svg"`,
+		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-d440f3d2.svg"`,
 	)
 	expect(tldrFileWithParams3).toMatchInlineSnapshot(
-		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-e735e7ba.svg"`,
+		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-85e0e2b4.svg"`,
 	)
 	expect(tldrFileFrame).toMatchInlineSnapshot(
 		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-three-frames-frame-3-7b88b7f0.svg"`,

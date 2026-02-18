@@ -21,3 +21,4 @@ vendor/
 
 # Customizations
 dist-demo/
+/.claude
