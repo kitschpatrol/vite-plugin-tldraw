@@ -5,8 +5,11 @@ export default defineConfig({
 		profile: 'esm-only',
 	},
 	copy: ['src/client.d.ts'],
-	external: ['fsevents', 'vite'],
+	deps: {
+		neverBundle: ['fsevents', 'vite'],
+	},
 	fixedExtension: false,
 	platform: 'node',
+	publint: true,
 	tsconfig: './tsconfig.build.json',
 })
