@@ -6,7 +6,6 @@ export default defineConfig({
 	plugins: [tldrPlugin({ verbose: true })],
 	root: './test/assets',
 	test: {
-		testTimeout: 120_000,
 		browser: {
 			enabled: true,
 			headless: true,
@@ -20,5 +19,6 @@ export default defineConfig({
 			PROJECT_ROOT: import.meta.dirname,
 		},
 		silent: 'passed-only',
+		testTimeout: 120_000,
 	},
 })

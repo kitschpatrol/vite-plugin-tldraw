@@ -10,7 +10,8 @@ async function fetchFilePathExists(
 	const thePath = typeof relativePath === 'string' ? relativePath : relativePath.src
 
 	// Construct @fs path using the project root, normalizing for Windows
-	const normalizedRoot = (projectRoot as string).replace(/\\/g, '/')
+	// eslint-disable-next-line ts/no-unsafe-type-assertion
+	const normalizedRoot = (projectRoot as string).replaceAll('\\', '/')
 	const prefix = normalizedRoot.startsWith('/') ? '' : '/'
 	const fsPath = `/@fs${prefix}${normalizedRoot}${thePath}`
 
