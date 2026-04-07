@@ -35,6 +35,9 @@ export type TldrawImageResultMetadata = {
 	width: number
 }
 
+const CLEAN_ID_REGEX = /\?.*$/
+const TLDR_TAG_REGEX = /&tldr.*$/
+
 /**
  * Vite plugin to convert tldraw `.tldr` files to images on import
  */
@@ -74,11 +77,11 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 		name: 'vite-plugin-tldraw',
 		async transform(_, id) {
 			// Strip parameters before testing for match
-			const cleanId = id.replace(/\?.*$/, '')
+			const cleanId = id.replace(CLEAN_ID_REGEX, '')
 			if (cleanId.endsWith('.tldr')) {
 				// Extract params
 				// remove the tldr tag from the end
-				const paramsString = id.replace(/&tldr.*$/, '').split('?')[1] ?? ''
+				const paramsString = id.replace(TLDR_TAG_REGEX, '').split('?')[1] ?? ''
 				const params = new URLSearchParams(paramsString)
 				const imageOptions = convertSearchParamsToObject<TldrawImageOptions>(params)
 
