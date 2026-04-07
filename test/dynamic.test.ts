@@ -9,8 +9,10 @@ async function fetchFilePathExists(
 ): Promise<boolean> {
 	const thePath = typeof relativePath === 'string' ? relativePath : relativePath.src
 
-	// Construct @fs path using the project root
-	const fsPath = `/@fs${projectRoot}${thePath}`
+	// Construct @fs path using the project root, normalizing for Windows
+	const normalizedRoot = (projectRoot as string).replace(/\\/g, '/')
+	const prefix = normalizedRoot.startsWith('/') ? '' : '/'
+	const fsPath = `/@fs${prefix}${normalizedRoot}${thePath}`
 
 	// eslint-disable-next-line node/no-unsupported-features/node-builtins -- fetch is available in browser context
 	const response = await fetch(fsPath)

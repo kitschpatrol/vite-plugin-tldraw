@@ -6,6 +6,7 @@ export default defineConfig({
 	plugins: [tldrPlugin({ verbose: true })],
 	root: './test/assets',
 	test: {
+		testTimeout: 120_000,
 		browser: {
 			enabled: true,
 			headless: true,

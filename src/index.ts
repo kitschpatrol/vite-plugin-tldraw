@@ -125,11 +125,13 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 					.filter((element) => element !== undefined)
 					.join('-')}.${format}`
 				const sourceCachePathAbsolute = path.join(cacheDirectory, sourceCacheFilename)
-				const sourceCachePathProject = path.join(
-					'/',
-					path.relative(
-						process.cwd(), // TODO - is this the right path?
-						sourceCachePathAbsolute,
+				const sourceCachePathProject = normalizePath(
+					path.join(
+						'/',
+						path.relative(
+							process.cwd(), // TODO - is this the right path?
+							sourceCachePathAbsolute,
+						),
 					),
 				)
 
