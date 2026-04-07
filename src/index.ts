@@ -155,7 +155,7 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 					}
 
 					// TldrawToImage returns an array of output files when frames is set, we always take the first one
-					const [outputFile] = await tldrawToImage(sourcePath, {
+					const [outputFile] = await tldrawToImage(path.normalize(sourcePath), {
 						dark,
 						format,
 						frames: frame ? [frame] : false,
