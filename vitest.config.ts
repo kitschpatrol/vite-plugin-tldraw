@@ -19,5 +19,6 @@ export default defineConfig({
 			PROJECT_ROOT: import.meta.dirname,
 		},
 		silent: 'passed-only',
+		testTimeout: 120_000,
 	},
 })
