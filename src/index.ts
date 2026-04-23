@@ -275,6 +275,9 @@ async function getPrettyFileSize(file: string): Promise<string> {
 function stripUndefined(
 	options: Record<string, unknown> | undefined,
 ): Record<string, unknown> | undefined {
-	if (options === undefined) return undefined
+	if (options === undefined) {
+		return undefined
+	}
+
 	return Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined))
 }
