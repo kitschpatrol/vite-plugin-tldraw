@@ -18,6 +18,12 @@
 
 <!-- /description -->
 
+> [!NOTE]
+>
+> **This package has been superseded by [@kitschpatrol/unplugin-tldraw](https://github.com/kitschpatrol/unplugin-tldraw)**, which offers similar functionality across a much wider variety of build tools.
+>
+> The vite-plugin-tldraw package will receive periodic security updates, but the unplugin-tldraw package is recommended for any new users and will be the site of any future feature development.
+
 ## Overview
 
 **A [Vite](https://vitejs.dev) plugin to automate the import and conversion of local [tldraw](https://tldraw.dev) `.tldr` files into SVG or PNG image assets.**
@@ -29,7 +35,9 @@ This allows `.tldr` files to be imported just like regular `.webp`, `.jpeg` etc.
 import tldrImage from './test/assets/test-sketch.tldr'
 
 const body = document.querySelector<HTMLDivElement>('body')
-if (body) body.innerHTML = `<img src="${tldrImage}" />`
+if (body) {
+  body.innerHTML = `<img src="${tldrImage}" />`
+}
 ```
 
 The above transforms `./test/assets/test-sketch.tldr` into `./test/assets/test-sketch-{hash}.svg`, caches the output file, and then returns an SVG URL ready to be passed to an `img` element's `src` attribute.
@@ -235,16 +243,20 @@ Some links and issues from development are retained for my own reference below:
 
 ## Maintainers
 
-[@kitschpatrol](https://github.com/kitschpatrol)
+[kitschpatrol](https://github.com/kitschpatrol)
 
 <!-- footer -->
 
 ## Contributing
 
-[Issues](https://github.com/kitschpatrol/vite-plugin-tldraw/issues) and pull requests are welcome.
+[Issues](https://github.com/kitschpatrol/vite-plugin-tldraw/issues) are welcome and appreciated.
+
+Please open an issue to discuss changes before submitting a pull request. Unsolicited PRs (especially AI-generated ones) are unlikely to be merged.
+
+This repository uses [@kitschpatrol/shared-config](https://github.com/kitschpatrol/shared-config) (via its `ksc` CLI) for linting and formatting, plus [MDAT](https://github.com/kitschpatrol/mdat) for readme placeholder expansion.
 
 ## License
 
-[MIT](license.txt) © Eric Mika
+[MIT](license.txt) © [Eric Mika](https://ericmika.com)
 
 <!-- /footer -->
