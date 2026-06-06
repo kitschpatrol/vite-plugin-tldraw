@@ -15,7 +15,6 @@ async function fetchFilePathExists(
 	const prefix = normalizedRoot.startsWith('/') ? '' : '/'
 	const fsPath = `/@fs${prefix}${normalizedRoot}${thePath}`
 
-	// eslint-disable-next-line node/no-unsupported-features/node-builtins -- fetch is available in browser context
 	const response = await fetch(fsPath)
 	return response.ok
 }
