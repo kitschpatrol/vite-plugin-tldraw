@@ -6,8 +6,8 @@
 
 <!-- badges -->
 
-[![NPM Package @kitschpatrol/vite-plugin-tldraw](https://img.shields.io/npm/v/@kitschpatrol/vite-plugin-tldraw.svg)](https://npmjs.com/package/@kitschpatrol/vite-plugin-tldraw)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
+[![NPM Package @kitschpatrol/vite-plugin-tldraw](https://img.shields.io/npm/v/@kitschpatrol/vite-plugin-tldraw.svg)](https://www.npmjs.com/package/@kitschpatrol/vite-plugin-tldraw)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit)
 [![CI](https://github.com/kitschpatrol/vite-plugin-tldraw/actions/workflows/ci.yml/badge.svg)](https://github.com/kitschpatrol/vite-plugin-tldraw/actions/workflows/ci.yml)
 
 <!-- /badges -->
@@ -52,13 +52,28 @@ _For lower-level processing of `.tldr` files in Node projects or via the command
 
 ## Installation
 
+<!-- dependencies -->
+
+### Dependencies
+
+- [Node.js](https://nodejs.org/) 22.22.2 or newer (specifically `^22.22.2 || ^24.0.0 || >=26.0.0`)
+- [vite](https://www.npmjs.com/package/vite) `^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0` _(peer dependency)_
+
+<!-- /dependencies -->
+
 ### 1. Install the plugin package
 
 Assuming you're starting with a Vite project of some flavor:
 
+<!-- install({ dev: true, heading: false }) -->
+
+Add it to your project as a development dependency:
+
 ```sh
 npm install --save-dev @kitschpatrol/vite-plugin-tldraw
 ```
+
+<!-- /install -->
 
 ### 2. Add the plugin to your `vite.config` file
 
@@ -152,8 +167,10 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [
     tldraw({
-      format: 'png',
-      transparent: true,
+      defaultImageOptions: {
+        format: 'png',
+        transparent: true,
+      },
       verbose: true,
     }),
   ],
@@ -177,7 +194,7 @@ In addition to all `TldrawImageOptions`, query parameters also accept additional
 | Key     | Type                  | Description                                                                                                                                                                              | Default     |
 | ------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `frame` | `string \| undefined` | When defined, outputs only a specific frame from the `.tldr` file. Provide either the frame name or its shape ID, e.g. `Frame 1`. Slugified frame names will also match, e.g. `frame-1`. | `undefined` |
-| `page`  | `string \| undefined` | When defined, outputs only a specific page from the `.tldr` file. Provide either the frame name or its page ID, e.g. `Page 1`. Slugified frame names will also match, e.g. `page-1`.     | `undefined` |
+| `page`  | `string \| undefined` | When defined, outputs only a specific page from the `.tldr` file. Provide either the page name or its page ID, e.g. `Page 1`. Slugified page names will also match, e.g. `page-1`.       | `undefined` |
 
 ### Import path query parameter examples
 
@@ -215,7 +232,7 @@ During development, images are served from the cache, and when Vite builds for p
 
 ## The future
 
-I'm planning to migrate to [unplugin](https://unplugin.unjs.io/) for support across bundlers.
+Support across bundlers is now provided by [@kitschpatrol/unplugin-tldraw](https://github.com/kitschpatrol/unplugin-tldraw), built on [unplugin](https://unplugin.unjs.io/).
 
 I'm consciously releasing this tool under the `@kitschpatrol` namespace on NPM to leave the `vite-plugin-tldraw` package name available to the core tldraw project.
 
@@ -240,6 +257,15 @@ Some links and issues from development are retained for my own reference below:
 
 - <https://github.com/vitejs/vite/issues/2394>
 - <https://github.com/vitejs/vite/issues/1997>
+
+<!-- development-dependencies({ headingLevel: 2 }) -->
+
+## Development dependencies
+
+- [Node.js](https://nodejs.org/) ^24.16.0 || >=26.3.0
+- [pnpm](https://pnpm.io/) 12.8.1
+
+<!-- /development-dependencies -->
 
 ## Maintainers
 

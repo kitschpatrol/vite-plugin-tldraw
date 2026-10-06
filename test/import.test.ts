@@ -7,7 +7,7 @@ import tldrFileWithParams2 from './assets/test-sketch.tldr?format=svg&dark=true&
 import tldrFileWithParams3 from './assets/test-sketch.tldr?format=svg&padding=200&tldr'
 import tldrFileWithParams4 from './assets/test-sketch.tldr?format=png&scale=4&tldr'
 /* eslint-enable perfectionist/sort-imports */
-// Cspell:disable-next-line
+// CSpell:disable-next-line
 import tldrFilePageWithFrame from './assets/test-sketch-three-pages.tldr?page=page-2&frame=gVS4O2yNqyRKDV4lp3Trd&tldr'
 import tldrFilePage from './assets/test-sketch-three-pages.tldr?page=page-2&tldr'
 
@@ -31,7 +31,7 @@ it('converts tldr files to images on import', () => {
 		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-three-frames-frame-3-7b88b7f0.svg"`,
 	)
 	expect(tldrFilePageWithFrame).toMatchInlineSnapshot(
-		// Cspell:disable-next-line
+		// CSpell:disable-next-line
 		`"/test/assets/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/tldr/test-sketch-three-pages-page-2-g-vs-4-o2y-nqy-rkdv-4lp3-trd-878d9b80.svg"`,
 	)
 	expect(tldrFilePage).toMatchInlineSnapshot(

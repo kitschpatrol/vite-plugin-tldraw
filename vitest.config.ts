@@ -15,7 +15,7 @@ export default defineConfig({
 		},
 		dir: 'test',
 		env: {
-			// eslint-disable-next-line ts/naming-convention, node/no-unsupported-features/node-builtins
+			// eslint-disable-next-line ts/naming-convention
 			PROJECT_ROOT: import.meta.dirname,
 		},
 		silent: 'passed-only',

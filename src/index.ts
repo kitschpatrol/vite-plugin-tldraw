@@ -35,8 +35,8 @@ export type TldrawImageResultMetadata = {
 	width: number
 }
 
-const CLEAN_ID_REGEX = /\?.*$/
-const TLDR_TAG_REGEX = /&tldr.*$/
+const CLEAN_ID_REGEX = /\?.*$/v
+const TLDR_TAG_REGEX = /&tldr.*$/v
 
 /**
  * Vite plugin to convert tldraw `.tldr` files to images on import
@@ -78,151 +78,164 @@ export default function tldraw(options?: TldrawPluginOptions): Plugin {
 		async transform(_, id) {
 			// Strip parameters before testing for match
 			const cleanId = id.replace(CLEAN_ID_REGEX, '')
-			if (cleanId.endsWith('.tldr')) {
-				// Extract params
-				// remove the tldr tag from the end
-				const paramsString = id.replace(TLDR_TAG_REGEX, '').split('?')[1] ?? ''
-				const params = new URLSearchParams(paramsString)
-				const imageOptions = convertSearchParamsToObject<TldrawImageOptions>(params)
+			if (!cleanId.endsWith('.tldr')) {
+				return
+			}
 
-				// Merge options, with the following priority:
-				// 1. URL search params provided in the module import url
-				// 2. TldrawImageOptions passed in plugin options
-				// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
-				const mergedImageOptions: TldrawImageOptions & {
-					// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
-					// between input and output files, we only support a single frame name or id here
-					frame?: string
-					// Tldraw-cli supports arrays of page names, but to maintain 1:1 relationship
-					// between input and output files, we only support a single page name or id here
-					page?: string
-				} = {
-					...resolvedOptions.defaultImageOptions,
-					...stripUndefined(imageOptions),
-				}
+			// Extract params
+			// remove the tldr tag from the end
+			const paramsString = id.replace(TLDR_TAG_REGEX, '').split('?', 2)[1] ?? ''
+			const params = new URLSearchParams(paramsString)
+			const imageOptions = convertSearchParamsToObject<TldrawImageOptions>(params)
 
-				if (mergedImageOptions.format === 'tldr') {
-					throw new Error('tldr format is not supported as an export target in vite-plugin-tldraw')
-				}
+			// Merge options, with the following priority:
+			// 1. URL search params provided in the module import url
+			// 2. TldrawImageOptions passed in plugin options
+			// 3. Defaults defined for plugin, matching the defaults in tldraw-cli
+			const mergedImageOptions: TldrawImageOptions & {
+				// Tldraw-cli supports arrays of frame names, but to maintain 1:1 relationship
+				// between input and output files, we only support a single frame name or id here
+				frame?: string
+				// Tldraw-cli supports arrays of page names, but to maintain 1:1 relationship
+				// between input and output files, we only support a single page name or id here
+				page?: string
+			} = {
+				...resolvedOptions.defaultImageOptions,
+				...stripUndefined(imageOptions),
+			}
 
-				// Sort out filenames
-				const sourcePath = normalizePath(cleanId)
-				const sourcePathRelative = path.relative(
-					process.cwd(), // TODO - is this the right path?
-					sourcePath,
-				)
-				const sourceHash = await getFileHash(sourcePath, mergedImageOptions)
-				const sourceFilename = path.basename(sourcePath, path.extname(sourcePath))
+			if (mergedImageOptions.format === 'tldr') {
+				throw new Error('tldr format is not supported as an export target in vite-plugin-tldraw')
+			}
 
-				// Sort out options
-				const { cacheEnabled, verbose } = resolvedOptions
-				const { dark, format, frame, padding, page, scale, stripStyle, transparent } =
-					mergedImageOptions
-				const pageName = page ? slugify(page) : undefined
-				const frameName = frame ? slugify(frame) : undefined
+			// Sort out filenames
+			const sourcePath = normalizePath(cleanId)
+			const sourcePathRelative = path.relative(
+				process.cwd(), // TODO - is this the right path?
+				sourcePath,
+			)
+			const sourceHash = await getFileHash(sourcePath, mergedImageOptions)
+			const sourceFilename = path.basename(sourcePath, path.extname(sourcePath))
 
-				const sourceCacheFilename = `${[sourceFilename, pageName, frameName, sourceHash]
-					.filter((element) => element !== undefined)
-					.join('-')}.${format}`
-				const sourceCachePathAbsolute = path.join(cacheDirectory, sourceCacheFilename)
-				const sourceCachePathProject = normalizePath(
-					path.join(
-						'/',
-						path.relative(
-							process.cwd(), // TODO - is this the right path?
-							sourceCachePathAbsolute,
-						),
+			// Sort out options
+			const { cacheEnabled, verbose } = resolvedOptions
+			const { dark, format, frame, padding, page, scale, stripStyle, transparent } =
+				mergedImageOptions
+			/* eslint-disable ts/strict-boolean-expressions -- Query values may be coerced to numbers at runtime, so falsy `0` and `''` must both skip page and frame selection */
+			const pageName = page ? slugify(page) : undefined
+			const frameName = frame ? slugify(frame) : undefined
+			const frames = frame ? [frame] : false
+			const pages = page ? [page] : false
+			/* eslint-enable ts/strict-boolean-expressions */
+
+			const sourceCacheFilename = `${[sourceFilename, pageName, frameName, sourceHash]
+				.filter((element) => element !== undefined)
+				.join('-')}.${format}`
+			const sourceCachePathAbsolute = path.join(cacheDirectory, sourceCacheFilename)
+			const sourceCachePathProject = normalizePath(
+				path.join(
+					'/',
+					path.relative(
+						process.cwd(), // TODO - is this the right path?
+						sourceCachePathAbsolute,
 					),
-				)
+				),
+			)
 
-				// Check for cache, generate svg from tldr if needed
-				const cacheIsValid = await isFile(sourceCachePathAbsolute)
+			// Check for cache, generate svg from tldr if needed
+			const cacheIsValid = await isFile(sourceCachePathAbsolute)
 
-				if (cacheIsValid) {
-					if (verbose) {
-						console.log(
-							`\n[vite-plugin-tldraw] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
-						)
-					}
-				} else {
-					const startTime = performance.now()
-					await fs.mkdir(cacheDirectory, { recursive: true })
+			if (cacheIsValid) {
+				if (verbose) {
+					console.log(
+						`\n[vite-plugin-tldraw] Cache found:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
+					)
+				}
+			} else {
+				const startTime = performance.now()
+				await fs.mkdir(cacheDirectory, { recursive: true })
 
-					if (verbose && cacheEnabled) {
-						console.log(
-							`\n[vite-plugin-tldraw] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
-						)
-					}
-
-					// TldrawToImage returns an array of output files when frames is set, we always take the first one
-					const [outputFile] = await tldrawToImage(path.normalize(sourcePath), {
-						dark,
-						format,
-						frames: frame ? [frame] : false,
-						name: nanoid(), // Unique temp name to avoid collisions
-						output: cacheDirectory,
-						padding,
-						pages: page ? [page] : false,
-						scale,
-						stripStyle,
-						transparent,
-					})
-
-					await fs.rename(outputFile, sourceCachePathAbsolute)
-
-					if (verbose) {
-						const sizeReport = await getPrettyFileSize(sourceCachePathAbsolute)
-						const timeReport = prettyMilliseconds(performance.now() - startTime)
-						console.log(
-							`\n[vite-plugin-tldraw] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathProject}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
-						)
-					}
+				if (verbose && cacheEnabled) {
+					console.log(
+						`\n[vite-plugin-tldraw] Cache missed:\n  For:\t"${sourcePathRelative}"\n  At:\t"${sourceCachePathProject}"`,
+					)
 				}
 
-				const exportPath = isBuild
-					? path.join(basePath, path.join(assetsDirectory, sourceCacheFilename))
-					: sourceCachePathProject
+				// TldrawToImage returns an array of output files when frames is set, we always take the first one
+				const [outputFile] = await tldrawToImage(path.normalize(sourcePath), {
+					dark,
+					format,
+					frames,
+					name: nanoid(), // Unique temp name to avoid collisions
+					output: cacheDirectory,
+					padding,
+					pages,
+					scale,
+					stripStyle,
+					transparent,
+				})
 
-				if (isBuild) {
-					// Copy to output dir if building
-					const outputFilePath = path.join(assetsDirectory, sourceCacheFilename)
-					this.emitFile({
-						fileName: outputFilePath,
-						source: await fs.readFile(sourceCachePathAbsolute),
-						type: 'asset',
-					})
+				if (outputFile === undefined) {
+					throw new Error(
+						`[vite-plugin-tldraw] tldraw-cli produced no output for "${sourcePathRelative}". Check that the requested page or frame exists in the file.`,
+					)
 				}
 
-				if (resolvedOptions.returnMetadata) {
-					const { width, height } = await imageDimensionsFromFile(sourceCachePathAbsolute)
+				await fs.rename(outputFile, sourceCachePathAbsolute)
 
-					const metadata: TldrawImageResultMetadata = {
-						format: format ?? 'svg',
-						height,
-						// Better to leave this to the consumer...
-						// src: path.posix.join(
-						// 	'/@fs',
-						// 	process.cwd(),
-						// 	`${exportPath}?${new URLSearchParams({
-						// 		/* eslint-disable perfectionist/sort-objects */
-						// 		origWidth: Math.round(width).toString(),
-						// 		origHeight: Math.round(height).toString(),
-						// 		origFormat: format ?? 'svg',
-						// 		/* eslint-enable perfectionist/sort-objects */
-						// 	}).toString()}`,
-						// ),
-						src: exportPath,
-						width,
-					}
-					return {
-						code: `export default ${JSON.stringify(metadata)};`,
-					}
+				if (verbose) {
+					const sizeReport = await getPrettyFileSize(sourceCachePathAbsolute)
+					const timeReport = prettyMilliseconds(performance.now() - startTime)
+					console.log(
+						`\n[vite-plugin-tldraw] Finished generating image:\n  From:\t"${sourcePathRelative}"\n  To:\t"${sourceCachePathProject}"\n  Size:\t${sizeReport}\n  Time:\t${timeReport}`,
+					)
 				}
+			}
 
-				// Return just the URL string
+			const exportPath = isBuild
+				? path.join(basePath, path.join(assetsDirectory, sourceCacheFilename))
+				: sourceCachePathProject
+
+			if (isBuild) {
+				// Copy to output dir if building
+				const outputFilePath = path.join(assetsDirectory, sourceCacheFilename)
+				// eslint-disable-next-line unicorn/no-this-outside-of-class -- Rollup exposes emitFile only through the hook's plugin context
+				this.emitFile({
+					fileName: outputFilePath,
+					source: await fs.readFile(sourceCachePathAbsolute),
+					type: 'asset',
+				})
+			}
+
+			if (resolvedOptions.returnMetadata) {
+				const { width, height } = await imageDimensionsFromFile(sourceCachePathAbsolute)
+
+				const metadata: TldrawImageResultMetadata = {
+					format: format ?? 'svg',
+					height,
+					// Better to leave this to the consumer...
+					// src: path.posix.join(
+					// 	'/@fs',
+					// 	process.cwd(),
+					// 	`${exportPath}?${new URLSearchParams({
+					// 		/* eslint-disable perfectionist/sort-objects */
+					// 		origWidth: Math.round(width).toString(),
+					// 		origHeight: Math.round(height).toString(),
+					// 		origFormat: format ?? 'svg',
+					// 		/* eslint-enable perfectionist/sort-objects */
+					// 	}).toString()}`,
+					// ),
+					src: exportPath,
+					width,
+				}
 				return {
-					code: `export default "${exportPath}";`,
+					code: `export default ${JSON.stringify(metadata)};`,
 				}
+			}
+
+			// Return just the URL string
+			return {
+				code: `export default "${exportPath}";`,
 			}
 		},
 	}
@@ -246,7 +259,7 @@ async function getFileHash(filePath: string, tldrawOptions?: TldrawImageOptions)
 // eslint-disable-next-line ts/no-unnecessary-type-parameters
 function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 	const object: Record<string, unknown> = {}
-	for (const [key, value] of params.entries()) {
+	for (const [key, value] of params) {
 		if (value === 'true') {
 			object[key] = true
 		} else if (value === 'false') {
@@ -258,7 +271,6 @@ function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 		}
 	}
 
-	// eslint-disable-next-line ts/no-unsafe-type-assertion
 	return object as T
 }
 
@@ -275,9 +287,7 @@ async function getPrettyFileSize(file: string): Promise<string> {
 function stripUndefined(
 	options: Record<string, unknown> | undefined,
 ): Record<string, unknown> | undefined {
-	if (options === undefined) {
-		return undefined
-	}
-
-	return Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined))
+	return options === undefined
+		? undefined
+		: Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined))
 }

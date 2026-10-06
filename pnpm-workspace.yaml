@@ -14,5 +14,7 @@ allowBuilds:
   oxc-resolver: true
   puppeteer: true
   unrs-resolver: true
-minimumReleaseAgeExclude:
-  - '@kitschpatrol/*'
+peerDependencyRules:
+  allowedVersions:
+    # Remove once eslint-plugin-jsx-a11y declares ESLint 10 support (jsx-eslint/eslint-plugin-jsx-a11y#1081)
+    'eslint-plugin-jsx-a11y>eslint': '10'

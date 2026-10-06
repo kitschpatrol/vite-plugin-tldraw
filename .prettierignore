@@ -4,6 +4,3 @@
 # @kitschpatrol/prettier-config boilerplate
 pnpm-lock.yaml
 package-lock.json
-
-# Customizations
-dist-demo/

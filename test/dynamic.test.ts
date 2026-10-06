@@ -10,7 +10,6 @@ async function fetchFilePathExists(
 	const thePath = typeof relativePath === 'string' ? relativePath : relativePath.src
 
 	// Construct @fs path using the project root, normalizing for Windows
-	// eslint-disable-next-line ts/no-unsafe-type-assertion
 	const normalizedRoot = (projectRoot as string).replaceAll('\\', '/')
 	const prefix = normalizedRoot.startsWith('/') ? '' : '/'
 	const fsPath = `/@fs${prefix}${normalizedRoot}${thePath}`
@@ -45,6 +44,6 @@ it('dynamically imports variable paths', async () => {
 	expect(tldrFile.default).toBeDefined()
 	// eslint-disable-next-line ts/no-unsafe-member-access
 	expect(tldrFile.default).toBeTypeOf('string')
-	// eslint-disable-next-line ts/no-unsafe-member-access, ts/no-unsafe-argument
+	// eslint-disable-next-line ts/no-unsafe-member-access
 	expect(await fetchFilePathExists(tldrFile.default)).toBe(true)
 })
