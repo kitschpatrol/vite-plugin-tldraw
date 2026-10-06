@@ -152,7 +152,7 @@ See the sections below for additional conversion options.
 | `transparent` | `boolean`        | Output image with a transparent background.                                                                                                      | `false` |
 | `dark`        | `boolean`        | Output a dark theme version of the image.                                                                                                        | `false` |
 | `stripStyle`  | `boolean`        | Remove `<style>` elements from SVG output, useful to lighten the load of embedded fonts or if you are providing your own stylesheet for the SVG. | `false` |
-| `padding`     | `number`         | Set a specific padding amount around the exported image.                                                                                         | `32`    |
+| `padding`     | `number`         | Set a specific padding amount around the exported image. Omit to trim to the visual content bounds.                                              | `auto`  |
 | `scale`       | `number`         | Set a sampling factor for raster image exports.                                                                                                  | `1`     |
 
 ### Plugin options example
@@ -263,7 +263,7 @@ Some links and issues from development are retained for my own reference below:
 ## Development dependencies
 
 - [Node.js](https://nodejs.org/) ^24.16.0 || >=26.3.0
-- [pnpm](https://pnpm.io/) 12.8.1
+- [pnpm](https://pnpm.io/) 12.9.1
 
 <!-- /development-dependencies -->
 
