@@ -263,7 +263,7 @@ Some links and issues from development are retained for my own reference below:
 ## Development dependencies
 
 - [Node.js](https://nodejs.org/) ^24.16.0 || >=26.3.0
-- [pnpm](https://pnpm.io/) 12.9.1
+- [pnpm](https://pnpm.io/) 12.11.2
 
 <!-- /development-dependencies -->
 
