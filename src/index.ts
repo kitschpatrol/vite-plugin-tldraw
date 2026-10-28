@@ -264,10 +264,10 @@ function convertSearchParamsToObject<T>(params: URLSearchParams): T {
 			object[key] = true
 		} else if (value === 'false') {
 			object[key] = false
-		} else if (value !== '' && !Number.isNaN(Number(value))) {
-			object[key] = Number(value)
-		} else {
+		} else if (value === '' || Number.isNaN(Number(value))) {
 			object[key] = value
+		} else {
+			object[key] = Number(value)
 		}
 	}
 
