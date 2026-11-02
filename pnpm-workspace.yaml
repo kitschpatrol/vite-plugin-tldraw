@@ -1,6 +1,8 @@
 allowBuilds:
   puppeteer: true
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@kitschpatrol/tldraw-cli@6.1.1'
 peerDependencyRules:
   allowedVersions:
     # Remove once the installed version declares ESLint 10 support.
