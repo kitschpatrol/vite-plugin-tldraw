@@ -2,6 +2,7 @@ allowBuilds:
   puppeteer: true
   unrs-resolver: true
 minimumReleaseAgeExclude:
+  - '@kitschpatrol/chagent@0.4.0'
   - '@kitschpatrol/tldraw-cli@6.1.1'
 peerDependencyRules:
   allowedVersions:
